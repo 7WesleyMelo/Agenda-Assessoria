@@ -1,16 +1,16 @@
 <section class="usuarios">
   <header class="cabecalho">
     <div>
-      <p class="cabecalho__legenda">Cadastro de usuarios</p>
+      <p class="cabecalho__legenda">Cadastro de usuários</p>
       <h2>Controle de acesso ao ERP</h2>
       <p class="cabecalho__descricao">
-        Cadastre, edite e gerencie os usuarios internos do sistema. A API bloqueia a exclusao do
-        proprio usuario autenticado.
+        Cadastre, edite e gerencie os usuários internos do sistema. A API bloqueia a exclusão do
+        próprio usuário autenticado.
       </p>
     </div>
 
     <button type="button" class="botao botao--secundario" (click)="iniciarCadastro()">
-      Novo usuario
+      Novo usuário
     </button>
   </header>
 
@@ -21,7 +21,7 @@
   <article class="painel-lista">
     <div class="painel-lista__topo">
       <div>
-        <h3>Usuarios cadastrados</h3>
+        <h3>Usuários cadastrados</h3>
         <span>{{ usuariosFiltrados().length }} registros encontrados</span>
       </div>
 
@@ -37,9 +37,9 @@
     </div>
 
     @if (carregando()) {
-      <p class="estado">Carregando usuarios...</p>
+      <p class="estado">Carregando usuários...</p>
     } @else if (usuariosFiltrados().length === 0) {
-      <p class="estado">Nenhum usuario encontrado com o filtro informado.</p>
+      <p class="estado">Nenhum usuário encontrado com o filtro informado.</p>
     } @else {
       <div class="tabela-wrapper">
         <div class="tabela-cabecalho">
@@ -47,7 +47,7 @@
           <span>E-mail</span>
           <span>Cargo</span>
           <span>Status</span>
-          <span class="tabela-cabecalho__acoes">Acoes</span>
+          <span class="tabela-cabecalho__acoes">Ações</span>
         </div>
 
         <div class="tabela-corpo">
@@ -84,7 +84,7 @@
           Anterior
         </button>
 
-        <span>Pagina {{ paginaAtual() }} de {{ totalPaginas() }}</span>
+        <span>Página {{ paginaAtual() }} de {{ totalPaginas() }}</span>
 
         <button
           type="button"
@@ -92,7 +92,7 @@
           [disabled]="paginaAtual() === totalPaginas()"
           (click)="irParaPagina(paginaAtual() + 1)"
         >
-          Proxima
+          Próxima
         </button>
       </footer>
     }
@@ -103,8 +103,8 @@
       <aside class="drawer" (click)="$event.stopPropagation()">
         <div class="drawer__topo">
           <div>
-            <p class="drawer__legenda">Formulario lateral</p>
-            <h3>{{ usuarioEmEdicao() ? 'Editar usuario' : 'Novo usuario' }}</h3>
+            <p class="drawer__legenda">Formulário lateral</p>
+            <h3>{{ usuarioEmEdicao() ? 'Editar usuário' : 'Novo usuário' }}</h3>
           </div>
 
           <button type="button" class="botao-fechar" (click)="fecharFormulario()">Fechar</button>
@@ -132,7 +132,7 @@
 
           <label class="campo campo--checkbox">
             <input type="checkbox" formControlName="ativo" />
-            <span>Usuario ativo</span>
+            <span>Usuário ativo</span>
           </label>
 
           <label class="campo">
@@ -140,7 +140,7 @@
             <input
               type="password"
               formControlName="password"
-              [placeholder]="usuarioEmEdicao() ? 'Preencha apenas se quiser alterar' : 'Minimo de 6 caracteres'"
+              [placeholder]="usuarioEmEdicao() ? 'Preencha apenas se quiser alterar' : 'Mínimo de 6 caracteres'"
             />
           </label>
 
@@ -149,7 +149,7 @@
               Cancelar
             </button>
             <button type="submit" class="botao botao--primario" [disabled]="salvando()">
-              {{ salvando() ? 'Salvando...' : usuarioEmEdicao() ? 'Salvar alteracoes' : 'Cadastrar usuario' }}
+              {{ salvando() ? 'Salvando...' : usuarioEmEdicao() ? 'Salvar alterações' : 'Cadastrar usuário' }}
             </button>
           </div>
         </form>
@@ -160,11 +160,11 @@
   @if (usuarioPendenteExclusao(); as usuario) {
     <div class="modal-backdrop" (click)="cancelarExclusao()">
       <section class="modal" (click)="$event.stopPropagation()">
-        <p class="modal__legenda">Confirmacao de exclusao</p>
+        <p class="modal__legenda">Confirmação de exclusão</p>
         <h3>Excluir {{ usuario.nome }}?</h3>
         <p>
-          Esta acao remove o usuario do cadastro. Se ele for o usuario autenticado, a API vai
-          bloquear a exclusao automaticamente.
+          Esta ação remove o usuário do cadastro. Se ele for o usuário autenticado, a API vai
+          bloquear a exclusão automaticamente.
         </p>
 
         <div class="modal__acoes">
@@ -172,7 +172,7 @@
             Cancelar
           </button>
           <button type="button" class="botao botao--perigo" (click)="confirmarExclusao()">
-            Confirmar exclusao
+            Confirmar exclusão
           </button>
         </div>
       </section>

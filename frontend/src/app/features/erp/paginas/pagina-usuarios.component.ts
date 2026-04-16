@@ -85,7 +85,7 @@ export class PaginaUsuariosComponent implements OnInit {
         this.carregando.set(false);
       },
       error: (erro: HttpErrorResponse) => {
-        this.mensagemErro.set(erro.error?.message ?? 'Nao foi possivel carregar os usuarios.');
+        this.mensagemErro.set(erro.error?.message ?? 'Não foi possível carregar os usuários.');
         this.carregando.set(false);
       },
     });
@@ -148,7 +148,7 @@ export class PaginaUsuariosComponent implements OnInit {
         this.mensagemErro.set(
           erro.error?.message ??
             erro.error?.errors?.usuario?.[0] ??
-            'Nao foi possivel salvar o usuario.'
+            'Não foi possível salvar o usuário.'
         );
       },
     });
@@ -176,7 +176,7 @@ export class PaginaUsuariosComponent implements OnInit {
         this.mensagemErro.set(
           erro.error?.message ??
             erro.error?.errors?.usuario?.[0] ??
-            'Nao foi possivel excluir o usuario.'
+            'Não foi possível excluir o usuário.'
         );
       },
     });

@@ -171,7 +171,7 @@ form,
 
 .status {
   display: inline-flex;
-  width: fit-content;
+  justify-self: start;
   padding: 0.3rem 0.65rem;
   border-radius: 999px;
   background: rgba(31, 111, 95, 0.12);
@@ -183,10 +183,6 @@ form,
 .status--inativo {
   background: rgba(196, 106, 42, 0.12);
   color: #a85622;
-}
-
-.campo span {
-  font-weight: 700;
 }
 
 .campo input,
@@ -318,12 +314,10 @@ form,
   }
 
   .campo-busca input {
-    min-width: 100%;
     width: 100%;
   }
 
   .drawer {
-    width: min(100%, 100vw);
     border-radius: 0;
   }
 }
