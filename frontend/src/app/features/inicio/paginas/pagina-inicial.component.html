@@ -1,0 +1,37 @@
+<main class="pagina-inicial">
+  <section class="hero">
+    <p class="hero__etiqueta">Teste tecnico senior</p>
+    <h1>Agenda Assessoria</h1>
+    <p class="hero__descricao">
+      Base inicial do frontend preparada para evoluir com componentes, rotas por funcionalidade
+      e integracao consistente com a API em Laravel.
+    </p>
+
+    <div class="hero__acoes">
+      <a class="botao botao--primario" [href]="urlApi + '/saude'" target="_blank" rel="noreferrer">
+        Ver saude da API
+      </a>
+      <span class="hero__apoio">URL base da API: {{ urlApi }}</span>
+    </div>
+  </section>
+
+  <section class="painel">
+    <article class="painel__bloco">
+      <h2>Direcao inicial</h2>
+      <p>
+        Esta interface foi reduzida ao essencial para evitar ruido visual do template padrao e
+        abrir espaco para uma arquitetura de frontend mais intencional.
+      </p>
+    </article>
+
+    <article class="painel__bloco">
+      <h2>Pilares do projeto</h2>
+
+      <ul class="lista">
+        @for (pilar of pilares; track pilar) {
+          <li>{{ pilar }}</li>
+        }
+      </ul>
+    </article>
+  </section>
+</main>
