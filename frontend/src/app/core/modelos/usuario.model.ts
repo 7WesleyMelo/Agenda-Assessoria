@@ -3,4 +3,5 @@ export interface Usuario {
   nome: string;
   email: string;
   cargo: string;
+  ativo: boolean;
 }

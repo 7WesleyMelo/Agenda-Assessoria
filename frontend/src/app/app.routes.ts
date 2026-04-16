@@ -42,12 +42,19 @@ export const routes: Routes = [
       },
       {
         path: 'cadastros',
-        component: PaginaPlaceholderComponent,
-        data: {
-          titulo: 'Cadastros',
-          descricao: 'Area reservada para produtos, clientes, fornecedores e demais registros base do ERP.',
-        },
+        loadComponent: () =>
+          import('./features/erp/paginas/pagina-cadastros.component').then(
+            (module) => module.PaginaCadastrosComponent
+          ),
         title: 'Cadastros | Agenda Assessoria',
+      },
+      {
+        path: 'cadastros/usuarios',
+        loadComponent: () =>
+          import('./features/erp/paginas/pagina-usuarios.component').then(
+            (module) => module.PaginaUsuariosComponent
+          ),
+        title: 'Usuarios | Agenda Assessoria',
       },
       {
         path: 'financeiro',

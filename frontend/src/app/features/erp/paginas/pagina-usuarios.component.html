@@ -1,0 +1,102 @@
+<section class="usuarios">
+  <header class="cabecalho">
+    <div>
+      <p class="cabecalho__legenda">Cadastro de usuarios</p>
+      <h2>Controle de acesso ao ERP</h2>
+      <p class="cabecalho__descricao">
+        Cadastre, edite e gerencie os usuarios internos do sistema. A API bloqueia a exclusao do
+        proprio usuario autenticado.
+      </p>
+    </div>
+
+    <button type="button" class="botao botao--secundario" (click)="iniciarCadastro()">
+      Novo usuario
+    </button>
+  </header>
+
+  @if (mensagemErro()) {
+    <p class="mensagem-erro">{{ mensagemErro() }}</p>
+  }
+
+  <section class="grade">
+    <article class="painel-lista">
+      <div class="painel-lista__topo">
+        <h3>Usuarios cadastrados</h3>
+        <span>{{ usuarios().length }} registros</span>
+      </div>
+
+      @if (carregando()) {
+        <p class="estado">Carregando usuarios...</p>
+      } @else {
+        <div class="tabela">
+          @for (usuario of usuarios(); track usuario.id) {
+            <article class="linha">
+              <div>
+                <strong>{{ usuario.nome }}</strong>
+                <span>{{ usuario.email }}</span>
+              </div>
+
+              <div class="linha__meta">
+                <span>{{ usuario.cargo }}</span>
+                <span class="status" [class.status--inativo]="!usuario.ativo">
+                  {{ usuario.ativo ? 'Ativo' : 'Inativo' }}
+                </span>
+              </div>
+
+              <div class="linha__acoes">
+                <button type="button" class="botao botao--texto" (click)="editar(usuario)">Editar</button>
+                <button type="button" class="botao botao--texto-alerta" (click)="excluir(usuario)">
+                  Excluir
+                </button>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </article>
+
+    <article class="painel-formulario">
+      <div class="painel-formulario__topo">
+        <h3>{{ usuarioEmEdicao() ? 'Editar usuario' : 'Novo usuario' }}</h3>
+        @if (usuarioEmEdicao()) {
+          <button type="button" class="botao botao--texto" (click)="cancelarEdicao()">Cancelar</button>
+        }
+      </div>
+
+      <form [formGroup]="formulario" (ngSubmit)="salvar()">
+        <label class="campo">
+          <span>Nome</span>
+          <input type="text" formControlName="nome" />
+        </label>
+
+        <label class="campo">
+          <span>E-mail</span>
+          <input type="email" formControlName="email" />
+        </label>
+
+        <label class="campo">
+          <span>Cargo</span>
+          <input type="text" formControlName="cargo" />
+        </label>
+
+        <label class="campo campo--checkbox">
+          <input type="checkbox" formControlName="ativo" />
+          <span>Usuario ativo</span>
+        </label>
+
+        <label class="campo">
+          <span>{{ usuarioEmEdicao() ? 'Nova senha' : 'Senha inicial' }}</span>
+          <input
+            type="password"
+            formControlName="password"
+            [placeholder]="usuarioEmEdicao() ? 'Preencha apenas se quiser alterar' : 'Minimo de 6 caracteres'"
+          />
+        </label>
+
+        <button type="submit" class="botao botao--primario" [disabled]="salvando()">
+          {{ salvando() ? 'Salvando...' : usuarioEmEdicao() ? 'Salvar alteracoes' : 'Cadastrar usuario' }}
+        </button>
+      </form>
+    </article>
+  </section>
+</section>
