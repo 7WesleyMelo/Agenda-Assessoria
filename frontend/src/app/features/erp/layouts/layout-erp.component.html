@@ -11,8 +11,8 @@
       </a>
       <a routerLink="/erp/cadastros" routerLinkActive="ativo">Cadastros</a>
       <a routerLink="/erp/financeiro" routerLinkActive="ativo">Financeiro</a>
-      <a routerLink="/erp/relatorios" routerLinkActive="ativo">Relatorios</a>
-      <a routerLink="/erp/configuracoes" routerLinkActive="ativo">Configuracoes</a>
+      <a routerLink="/erp/relatorios" routerLinkActive="ativo">Relatórios</a>
+      <a routerLink="/erp/configuracoes" routerLinkActive="ativo">Configurações</a>
     </nav>
   </aside>
 
@@ -33,7 +33,7 @@
           <img
             class="menu-usuario__avatar"
             [src]="avatarUsuario()"
-            [alt]="'Foto do usuario ' + (sessaoService.usuario()?.nome ?? '')"
+            [alt]="'Foto do usuário ' + (sessaoService.usuario()?.nome ?? '')"
           />
         </button>
 
@@ -43,7 +43,7 @@
               <img
                 class="menu-usuario__avatar menu-usuario__avatar--grande"
                 [src]="avatarUsuario()"
-                [alt]="'Foto do usuario ' + (sessaoService.usuario()?.nome ?? '')"
+                [alt]="'Foto do usuário ' + (sessaoService.usuario()?.nome ?? '')"
               />
 
               <div>

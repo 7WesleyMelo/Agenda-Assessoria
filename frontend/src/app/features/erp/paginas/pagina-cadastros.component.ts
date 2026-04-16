@@ -12,18 +12,18 @@ import { RouterLink } from '@angular/router';
 export class PaginaCadastrosComponent {
   protected readonly modulos = [
     {
-      titulo: 'Usuarios',
-      descricao: 'Gerencie acesso, cargo e status dos usuarios internos do ERP.',
+      titulo: 'Usuários',
+      descricao: 'Gerencie acesso, cargo e status dos usuários internos do ERP.',
       rota: '/erp/cadastros/usuarios',
     },
     {
       titulo: 'Clientes',
-      descricao: 'Espaco reservado para o cadastro dos clientes atendidos pelo ERP.',
+      descricao: 'Espaço reservado para o cadastro dos clientes atendidos pelo ERP.',
       rota: '/erp/cadastros',
     },
     {
       titulo: 'Fornecedores',
-      descricao: 'Espaco reservado para o cadastro dos fornecedores da operacao.',
+      descricao: 'Espaço reservado para o cadastro dos fornecedores da operação.',
       rota: '/erp/cadastros',
     },
   ];

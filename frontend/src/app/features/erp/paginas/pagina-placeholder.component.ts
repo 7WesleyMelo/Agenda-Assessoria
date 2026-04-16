@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   standalone: true,
   template: `
     <section class="placeholder">
-      <p class="placeholder__legenda">Modulo em estruturacao</p>
+      <p class="placeholder__legenda">Módulo em estruturação</p>
       <h2>{{ titulo() }}</h2>
       <p>{{ descricao() }}</p>
     </section>

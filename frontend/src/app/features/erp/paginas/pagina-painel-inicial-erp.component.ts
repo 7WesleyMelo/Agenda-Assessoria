@@ -31,7 +31,7 @@ export class PaginaPainelInicialErpComponent implements OnInit {
         this.carregando.set(false);
       },
       error: (erro: HttpErrorResponse) => {
-        this.mensagemErro.set(erro.error?.message ?? 'Nao foi possivel carregar o painel inicial.');
+        this.mensagemErro.set(erro.error?.message ?? 'Não foi possível carregar o painel inicial.');
         this.carregando.set(false);
       },
     });

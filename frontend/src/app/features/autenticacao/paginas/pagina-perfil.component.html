@@ -1,6 +1,6 @@
 @if (carregando()) {
   <section class="estado">
-    <p>Carregando perfil do usuario...</p>
+    <p>Carregando perfil do usuário...</p>
   </section>
 } @else if (mensagemErro()) {
   <section class="estado">
@@ -13,10 +13,10 @@
       <div class="perfil__avatar">{{ dadosUsuario.nome.slice(0, 2).toUpperCase() }}</div>
 
       <div>
-        <p class="perfil__legenda">Perfil do usuario</p>
+        <p class="perfil__legenda">Perfil do usuário</p>
         <h2>{{ dadosUsuario.nome }}</h2>
         <p class="perfil__descricao">
-          Informacoes basicas da sessao autenticada no ERP.
+          Informações básicas da sessão autenticada no ERP.
         </p>
       </div>
     </header>
@@ -38,7 +38,7 @@
       </article>
 
       <article class="perfil__card">
-        <span>Status da sessao</span>
+        <span>Status da sessão</span>
         <strong>Autenticado via JWT</strong>
       </article>
     </section>

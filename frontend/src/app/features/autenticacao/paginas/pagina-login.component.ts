@@ -46,7 +46,7 @@ export class PaginaLoginComponent {
           void this.router.navigate(['/erp']);
         },
         error: (erro: HttpErrorResponse) => {
-          this.mensagemErro.set(erro.error?.message ?? 'Nao foi possivel autenticar.');
+          this.mensagemErro.set(erro.error?.message ?? 'Não foi possível autenticar.');
         },
       });
   }

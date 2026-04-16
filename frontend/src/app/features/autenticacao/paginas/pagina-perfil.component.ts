@@ -34,7 +34,9 @@ export class PaginaPerfilComponent implements OnInit {
         this.carregando.set(false);
       },
       error: (erro: HttpErrorResponse) => {
-        this.mensagemErro.set(erro.error?.message ?? 'Nao foi possivel carregar o perfil do usuario.');
+        this.mensagemErro.set(
+          erro.error?.message ?? 'Não foi possível carregar o perfil do usuário.'
+        );
         this.carregando.set(false);
       },
     });

@@ -54,14 +54,14 @@ export const routes: Routes = [
           import('./features/erp/paginas/pagina-usuarios.component').then(
             (module) => module.PaginaUsuariosComponent
           ),
-        title: 'Usuarios | Agenda Assessoria',
+        title: 'Usuários | Agenda Assessoria',
       },
       {
         path: 'financeiro',
         component: PaginaPlaceholderComponent,
         data: {
           titulo: 'Financeiro',
-          descricao: 'Area reservada para fluxo de caixa, contas a pagar e contas a receber.',
+          descricao: 'Área reservada para fluxo de caixa, contas a pagar e contas a receber.',
         },
         title: 'Financeiro | Agenda Assessoria',
       },
@@ -69,19 +69,19 @@ export const routes: Routes = [
         path: 'relatorios',
         component: PaginaPlaceholderComponent,
         data: {
-          titulo: 'Relatorios',
-          descricao: 'Area reservada para visoes gerenciais e indicadores do ERP.',
+          titulo: 'Relatórios',
+          descricao: 'Área reservada para visões gerenciais e indicadores do ERP.',
         },
-        title: 'Relatorios | Agenda Assessoria',
+        title: 'Relatórios | Agenda Assessoria',
       },
       {
         path: 'configuracoes',
         component: PaginaPlaceholderComponent,
         data: {
-          titulo: 'Configuracoes',
-          descricao: 'Area reservada para parametros operacionais, perfis e preferencias do sistema.',
+          titulo: 'Configurações',
+          descricao: 'Área reservada para parâmetros operacionais, perfis e preferências do sistema.',
         },
-        title: 'Configuracoes | Agenda Assessoria',
+        title: 'Configurações | Agenda Assessoria',
       },
     ],
   },
