@@ -103,6 +103,108 @@
   color: var(--cor-texto-suave);
 }
 
+.menu-usuario {
+  position: relative;
+}
+
+.menu-usuario__gatilho {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.45rem 0.55rem 0.45rem 1rem;
+  border: 1px solid rgba(80, 58, 37, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+}
+
+.menu-usuario__info {
+  display: grid;
+  gap: 0.18rem;
+  text-align: right;
+}
+
+.menu-usuario__info strong {
+  color: var(--cor-texto);
+}
+
+.menu-usuario__info span {
+  color: var(--cor-texto-suave);
+  font-size: 0.88rem;
+}
+
+.menu-usuario__avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 8px 18px rgba(31, 111, 95, 0.22);
+}
+
+.menu-usuario__avatar--grande {
+  width: 3.75rem;
+  height: 3.75rem;
+}
+
+.menu-usuario__dropdown {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  width: min(20rem, 82vw);
+  padding: 0.9rem;
+  border: 1px solid rgba(80, 58, 37, 0.12);
+  border-radius: 22px;
+  background: rgba(255, 252, 247, 0.98);
+  box-shadow: 0 24px 50px rgba(45, 36, 29, 0.16);
+  z-index: 20;
+}
+
+.menu-usuario__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(80, 58, 37, 0.12);
+}
+
+.menu-usuario__cabecalho strong,
+.menu-usuario__cabecalho span {
+  display: block;
+}
+
+.menu-usuario__cabecalho span {
+  margin-top: 0.2rem;
+  color: var(--cor-texto-suave);
+}
+
+.menu-usuario__acao {
+  width: 100%;
+  min-height: 2.9rem;
+  margin-top: 0.65rem;
+  border: 0;
+  border-radius: 16px;
+  background: rgba(31, 111, 95, 0.08);
+  color: var(--cor-texto);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+
+.menu-usuario__acao:hover {
+  background: rgba(31, 111, 95, 0.14);
+}
+
+.menu-usuario__acao--sair {
+  background: rgba(196, 106, 42, 0.1);
+  color: #8a3f13;
+}
+
+.menu-usuario__acao--sair:hover {
+  background: rgba(196, 106, 42, 0.16);
+}
+
 .conteudo__principal {
   margin-top: 1.5rem;
 }
@@ -114,5 +216,24 @@
 
   .barra-lateral {
     gap: 1rem;
+  }
+
+  .topo {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .menu-usuario {
+    width: 100%;
+  }
+
+  .menu-usuario__gatilho {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .menu-usuario__dropdown {
+    left: 0;
+    right: auto;
   }
 }
