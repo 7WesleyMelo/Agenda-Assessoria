@@ -21,19 +21,19 @@ class AutenticaComJwt
         $token = $request->bearerToken();
 
         if (! $token) {
-            return $this->naoAutorizado('Token de acesso nao informado.');
+            return $this->naoAutorizado('Token de acesso não informado.');
         }
 
         $payload = $this->jwtService->decodificar($token);
 
         if (! $payload || empty($payload['sub'])) {
-            return $this->naoAutorizado('Token de acesso invalido ou expirado.');
+            return $this->naoAutorizado('Token de acesso inválido ou expirado.');
         }
 
         $usuario = User::query()->find($payload['sub']);
 
         if (! $usuario) {
-            return $this->naoAutorizado('Usuario do token nao encontrado.');
+            return $this->naoAutorizado('Usuário do token não encontrado.');
         }
 
         $request->setUserResolver(static fn (): User => $usuario);

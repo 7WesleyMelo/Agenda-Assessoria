@@ -24,7 +24,7 @@ class AutenticacaoService
             ->first();
 
         if (! $usuario || ! Hash::check($senha, $usuario->password)) {
-            throw new AuthenticationException('Credenciais invalidas.');
+            throw new AuthenticationException('Credenciais inválidas.');
         }
 
         $token = $this->jwtService->gerarToken($usuario);

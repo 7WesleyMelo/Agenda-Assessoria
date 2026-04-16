@@ -46,7 +46,7 @@ class UsuarioService
     {
         if ($usuario->is($usuarioAutenticado)) {
             throw ValidationException::withMessages([
-                'usuario' => 'Nao e permitido excluir o usuario autenticado.',
+                'usuario' => 'Não é permitido excluir o usuário autenticado.',
             ]);
         }
 

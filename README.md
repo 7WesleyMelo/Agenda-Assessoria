@@ -1,10 +1,10 @@
 # Agenda Assessoria
 
-Projeto de teste tecnico estruturado como monorepo, com backend em Laravel, frontend em Angular, banco PostgreSQL e ambiente local executado via Docker.
+Projeto de teste técnico estruturado como monorepo, com backend em Laravel, frontend em Angular, banco PostgreSQL e ambiente local executado via Docker.
 
 ## Objetivo
 
-Entregar uma aplicacao com arquitetura clara, API RESTful consistente, frontend componentizado e ambiente reprodutivel, priorizando qualidade de codigo, clareza de decisao tecnica e facilidade de execucao.
+Entregar uma aplicação com arquitetura clara, API RESTful consistente, frontend componentizado e ambiente reproduzível, priorizando qualidade de código, clareza de decisão técnica e facilidade de execução.
 
 ## Stack
 
@@ -13,7 +13,7 @@ Entregar uma aplicacao com arquitetura clara, API RESTful consistente, frontend 
 - Banco de dados: PostgreSQL
 - Infra local: Docker Compose
 
-## Estrutura do Repositorio
+## Estrutura do Repositório
 
 ```text
 backend/
@@ -24,26 +24,26 @@ docs/
 
 ## Padrao de Idioma
 
-- Toda a documentacao do projeto sera escrita em pt-BR.
+- Toda a documentação do projeto será escrita em pt-BR.
 - Nomes descritivos exibidos ao avaliador devem priorizar pt-BR.
-- Mensagens de commit devem usar descricao em pt-BR.
-- Termos tecnicos consolidados do ecossistema podem ser mantidos quando forem o padrao da ferramenta.
+- Mensagens de commit devem usar descrição em pt-BR.
+- Termos técnicos consolidados do ecossistema podem ser mantidos quando forem o padrão da ferramenta.
 
 ## Estado Atual
 
-Este repositorio foi inicializado com a estrutura base, a documentacao tecnica inicial e a stack Docker local. O bootstrap de Laravel e Angular sera feito nas proximas etapas.
+Este repositório foi inicializado com a estrutura base, a documentação técnica inicial e a stack Docker local. O bootstrap de Laravel e Angular será feito nas próximas etapas.
 
-## Principios de Implementacao
+## Princípios de Implementação
 
-- Controllers finos e regras de negocio fora da camada HTTP
-- Organizacao por contexto funcional sempre que isso reduzir acoplamento
-- Componentizacao forte no frontend, com separacao clara entre pages, components e services
-- Regras criticas protegidas tanto na aplicacao quanto no banco
-- Ambiente local e CI guiados pela mesma estrategia de execucao
+- Controllers finos e regras de negócio fora da camada HTTP
+- Organização por contexto funcional sempre que isso reduzir acoplamento
+- Componentização forte no frontend, com separação clara entre pages, components e services
+- Regras críticas protegidas tanto na aplicação quanto no banco
+- Ambiente local e CI guiados pela mesma estratégia de execução
 
-## Proximos Passos
+## Próximos Passos
 
-1. Definir o escopo funcional final e o modelo de dominio inicial.
+1. Definir o escopo funcional final e o modelo de domínio inicial.
 2. Subir o monorepo com Laravel, Angular e Docker.
 3. Implementar os primeiros fluxos com testes e contrato da API.
-4. Refinar seguranca, observabilidade e pipeline.
+4. Refinar segurança, observabilidade e pipeline.

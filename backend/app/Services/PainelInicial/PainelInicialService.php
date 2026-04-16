@@ -40,8 +40,8 @@ class PainelInicialService
                 ['rotulo' => 'Painel inicial', 'icone' => 'dashboard', 'rota' => '/erp'],
                 ['rotulo' => 'Cadastros', 'icone' => 'inventory', 'rota' => '/erp/cadastros'],
                 ['rotulo' => 'Financeiro', 'icone' => 'payments', 'rota' => '/erp/financeiro'],
-                ['rotulo' => 'Relatorios', 'icone' => 'assessment', 'rota' => '/erp/relatorios'],
-                ['rotulo' => 'Configuracoes', 'icone' => 'settings', 'rota' => '/erp/configuracoes'],
+                ['rotulo' => 'Relatórios', 'icone' => 'assessment', 'rota' => '/erp/relatorios'],
+                ['rotulo' => 'Configurações', 'icone' => 'settings', 'rota' => '/erp/configuracoes'],
             ],
             'atalhos' => [
                 ['titulo' => 'Novo cliente', 'descricao' => 'Cadastrar um novo cliente no ERP.'],

@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Toda a stack do projeto sera executada com Docker Compose, mantendo ambiente local previsivel e proximo do pipeline.
+Toda a stack do projeto será executada com Docker Compose, mantendo ambiente local previsível e próximo do pipeline.
 
 ## Topologia Inicial
 
@@ -12,45 +12,45 @@ Toda a stack do projeto sera executada com Docker Compose, mantendo ambiente loc
 
 ## Diretrizes
 
-- Fixar versoes de runtime e imagens.
-- Expor apenas as portas necessarias ao host.
-- Usar comunicacao interna por nome de servico.
-- Persistir apenas estado real, principalmente banco de dados e arquivos necessarios da aplicacao.
+- Fixar versões de runtime e imagens.
+- Expor apenas as portas necessárias ao host.
+- Usar comunicação interna por nome de serviço.
+- Persistir apenas estado real, principalmente banco de dados e arquivos necessários da aplicação.
 - Definir healthchecks para banco e API.
-- Documentar um fluxo unico de bootstrap para toda a equipe avaliadora conseguir rodar a stack.
+- Documentar um fluxo único de bootstrap para toda a equipe avaliadora conseguir rodar a stack.
 
 ## Estado Atual
 
-Ja foram adicionados:
+Já foram adicionados:
 
 - `docker-compose.yml`
 - Dockerfiles do backend e frontend
-- exemplos de variaveis de ambiente
+- exemplos de variáveis de ambiente
 - scripts iniciais de entrada dos containers
 
 ## Arquivos Criados
 
-- `docker-compose.yml`: define os servicos `api`, `web` e `db`
+- `docker-compose.yml`: define os serviços `api`, `web` e `db`
 - `infra/docker/backend/Dockerfile`: imagem base do backend
 - `infra/docker/frontend/Dockerfile`: imagem base do frontend
 - `infra/scripts/backend/entrada.sh`: fluxo inicial do container Laravel
 - `infra/scripts/frontend/entrada.sh`: fluxo inicial do container Angular
-- `.env.example`: variaveis padrao do ambiente local
+- `.env.example`: variáveis padrão do ambiente local
 
 ## Como Subir a Stack
 
 1. Copiar `.env.example` para `.env`.
 2. Executar `docker compose up --build`.
 3. Inicializar Laravel em `backend/` e Angular em `frontend/`.
-4. Reiniciar os servicos apos o bootstrap das aplicacoes.
+4. Reiniciar os serviços após o bootstrap das aplicações.
 
-## Otimizacoes de Subida
+## Otimizações de Subida
 
 - O backend usa volume dedicado para `vendor` e cache do Composer.
 - O frontend usa volume dedicado para `node_modules`, cache do npm e cache do Angular.
-- As dependencias so sao reinstaladas quando `composer.lock` ou `package-lock.json` mudarem.
-- Isso reduz significativamente o tempo de subida depois da primeira inicializacao da stack.
+- As dependências só são reinstaladas quando `composer.lock` ou `package-lock.json` mudarem.
+- Isso reduz significativamente o tempo de subida depois da primeira inicialização da stack.
 
-## Observacao
+## Observação
 
-Enquanto `backend/` e `frontend/` ainda nao tiverem suas aplicacoes criadas, os containers `api` e `web` permanecem ativos em modo de espera. Isso permite estabilizar a infraestrutura antes do bootstrap completo da stack.
+Enquanto `backend/` e `frontend/` ainda não tiverem suas aplicações criadas, os containers `api` e `web` permanecem ativos em modo de espera. Isso permite estabilizar a infraestrutura antes do bootstrap completo da stack.

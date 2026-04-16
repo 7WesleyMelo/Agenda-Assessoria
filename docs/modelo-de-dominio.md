@@ -2,25 +2,25 @@
 
 ## Objetivo
 
-Este documento registra o dominio inicial da solucao antes da modelagem fisica no banco e antes da implementacao detalhada dos endpoints.
+Este documento registra o domínio inicial da solução antes da modelagem física no banco e antes da implementação detalhada dos endpoints.
 
-## Itens a Definir Antes da Implementacao Completa
+## Itens a Definir Antes da Implementação Completa
 
-- Entidades centrais do negocio
+- Entidades centrais do negócio
 - Relacionamentos entre entidades
-- Regras de negocio obrigatorias
-- Campos obrigatorios e opcionais
-- Fluxos principais da aplicacao
-- Operacoes criticas que exigem auditoria
+- Regras de negócio obrigatórias
+- Campos obrigatórios e opcionais
+- Fluxos principais da aplicação
+- Operações críticas que exigem auditoria
 
 ## Diretrizes de Modelagem
 
 - Modelar primeiro o dominio, depois as tabelas.
 - Nomear tabelas e colunas de forma consistente e previsivel.
 - Usar constraints no banco para regras criticas.
-- Planejar seeds minimos para ambiente local e testes.
-- Definir indices com base em acesso esperado, nao por habito.
+- Planejar seeds mínimos para ambiente local e testes.
+- Definir índices com base em acesso esperado, não por hábito.
 
-## Observacoes
+## Observações
 
-O modelo detalhado sera refinado assim que o escopo funcional final do teste estiver fechado.
+O modelo detalhado será refinado assim que o escopo funcional final do teste estiver fechado.
