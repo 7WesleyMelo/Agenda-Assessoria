@@ -1,19 +1,25 @@
 # Agenda Assessoria
 
-Projeto de teste técnico estruturado como monorepo, com backend em Laravel, frontend em Angular, banco PostgreSQL e ambiente local executado via Docker.
+Teste técnico estruturado como monorepo, com API RESTful em Laravel, frontend em Angular, PostgreSQL e execução local por Docker Compose.
 
-## Objetivo
+## Escopo atual
 
-Entregar uma aplicação com arquitetura clara, API RESTful consistente, frontend componentizado e ambiente reproduzível, priorizando qualidade de código, clareza de decisão técnica e facilidade de execução.
+O projeto já entrega o primeiro fluxo funcional ponta a ponta do ERP:
+
+- login com JWT
+- carregamento do painel inicial autenticado
+- shell principal com menu lateral
+- gestão de usuários com listagem, cadastro, edição e exclusão
+- bloqueio da exclusão do próprio usuário autenticado
 
 ## Stack
 
-- Backend: Laravel API
-- Frontend: Angular
-- Banco de dados: PostgreSQL
+- Backend: Laravel 12 com PHP 8.2
+- Frontend: Angular 20
+- Banco de dados: PostgreSQL 16
 - Infra local: Docker Compose
 
-## Estrutura do Repositório
+## Estrutura do repositório
 
 ```text
 backend/
@@ -22,28 +28,35 @@ infra/
 docs/
 ```
 
-## Padrao de Idioma
+## Padrão de idioma
 
-- Toda a documentação do projeto será escrita em pt-BR.
-- Nomes descritivos exibidos ao avaliador devem priorizar pt-BR.
+- Toda a documentação do projeto deve permanecer em pt-BR.
+- Textos visíveis ao avaliador devem priorizar pt-BR.
 - Mensagens de commit devem usar descrição em pt-BR.
-- Termos técnicos consolidados do ecossistema podem ser mantidos quando forem o padrão da ferramenta.
+- Termos técnicos consolidados podem permanecer no idioma padrão da ferramenta.
 
-## Estado Atual
+## Como executar
 
-Este repositório foi inicializado com a estrutura base, a documentação técnica inicial e a stack Docker local. O bootstrap de Laravel e Angular será feito nas próximas etapas.
+1. Copie `.env.example` para `.env` na raiz do projeto, caso ainda não exista.
+2. Suba os serviços com `docker compose up --build`.
+3. Acesse o frontend em `http://127.0.0.1:4200`.
+4. A API ficará disponível em `http://127.0.0.1:8001/api/v1`.
 
-## Princípios de Implementação
+Credencial inicial semeada no backend:
 
-- Controllers finos e regras de negócio fora da camada HTTP
-- Organização por contexto funcional sempre que isso reduzir acoplamento
-- Componentização forte no frontend, com separação clara entre pages, components e services
-- Regras críticas protegidas tanto na aplicação quanto no banco
-- Ambiente local e CI guiados pela mesma estratégia de execução
+- e-mail: `admin@agendaassessoria.com.br`
+- senha: `123456`
 
-## Próximos Passos
+## Qualidade e validação
 
-1. Definir o escopo funcional final e o modelo de domínio inicial.
-2. Subir o monorepo com Laravel, Angular e Docker.
-3. Implementar os primeiros fluxos com testes e contrato da API.
-4. Refinar segurança, observabilidade e pipeline.
+- Backend: `composer lint`, `composer test`
+- Frontend: `npm run lint`, `npm run test:ci`, `npm run build`
+- Pipeline inicial: GitHub Actions em `.github/workflows/validacao.yml`
+
+## Documentação relacionada
+
+- `docs/arquitetura.md`
+- `docs/contrato-da-api.md`
+- `docs/modelo-de-dominio.md`
+- `docs/plano-de-entrega.md`
+- `docs/estrategia-de-commits.md`

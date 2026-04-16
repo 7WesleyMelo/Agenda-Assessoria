@@ -5,8 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "lint": "tsc --noEmit -p tsconfig.app.json && node ./scripts/verificar-formatacao.mjs",
+    "format": "node ./scripts/formatar.mjs",
+    "format:check": "node ./scripts/verificar-formatacao.mjs",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadlessNoSandbox"
   },
   "prettier": {
     "printWidth": 100,
