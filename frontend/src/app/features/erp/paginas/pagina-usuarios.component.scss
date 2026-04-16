@@ -64,6 +64,12 @@ form,
   height: 10rem;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(186, 103, 49, 0.18), transparent 70%);
+  pointer-events: none;
+}
+
+.cabecalho > * {
+  position: relative;
+  z-index: 1;
 }
 
 .modal {
