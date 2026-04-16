@@ -20,19 +20,23 @@ class AutenticaComJwt
         $token = $request->bearerToken();
 
         if (! $token) {
-            return $this->naoAutorizado('Token de acesso não informado.');
+            return $this->naoAutorizado($request, 'Token de acesso não informado.');
         }
 
         $payload = $this->jwtService->decodificar($token);
 
         if (! $payload || empty($payload['sub'])) {
-            return $this->naoAutorizado('Token de acesso inválido ou expirado.');
+            return $this->naoAutorizado($request, 'Token de acesso inválido ou expirado.');
         }
 
         $usuario = User::query()->find($payload['sub']);
 
         if (! $usuario) {
-            return $this->naoAutorizado('Usuário do token não encontrado.');
+            return $this->naoAutorizado($request, 'Usuário do token não encontrado.');
+        }
+
+        if (! $usuario->ativo) {
+            return $this->naoAutorizado($request, 'Usuário do token está inativo.');
         }
 
         $request->setUserResolver(static fn (): User => $usuario);
@@ -40,10 +44,11 @@ class AutenticaComJwt
         return $next($request);
     }
 
-    private function naoAutorizado(string $mensagem): JsonResponse
+    private function naoAutorizado(Request $request, string $mensagem): JsonResponse
     {
         return response()->json([
             'message' => $mensagem,
+            'request_id' => $request->attributes->get('request_id'),
         ], Response::HTTP_UNAUTHORIZED);
     }
 }

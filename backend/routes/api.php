@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
     Route::get('/saude', HealthCheckController::class);
-    Route::post('/auth/login', LoginController::class);
+    Route::post('/auth/login', LoginController::class)->middleware('throttle:login');
 
     Route::middleware('jwt.auth')->group(function (): void {
         Route::get('/auth/perfil', PerfilController::class);
