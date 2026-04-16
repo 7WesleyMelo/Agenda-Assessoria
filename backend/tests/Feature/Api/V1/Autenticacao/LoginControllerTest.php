@@ -51,7 +51,7 @@ class LoginControllerTest extends TestCase
         $response
             ->assertUnauthorized()
             ->assertJson([
-                'message' => 'Credenciais invalidas.',
+                'message' => 'Credenciais inválidas.',
             ]);
     }
 }

@@ -42,7 +42,7 @@ class PainelInicialControllerTest extends TestCase
         $response
             ->assertUnauthorized()
             ->assertJson([
-                'message' => 'Token de acesso nao informado.',
+                'message' => 'Token de acesso não informado.',
             ]);
     }
 }
