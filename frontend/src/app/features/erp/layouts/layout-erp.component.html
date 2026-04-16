@@ -1,0 +1,38 @@
+<div class="layout-erp">
+  <aside class="barra-lateral">
+    <div class="marca">
+      <p class="marca__rotulo">Agenda</p>
+      <strong>ERP Assessoria</strong>
+    </div>
+
+    <nav class="menu">
+      <a routerLink="/erp" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">
+        Painel inicial
+      </a>
+      <a routerLink="/erp/cadastros" routerLinkActive="ativo">Cadastros</a>
+      <a routerLink="/erp/financeiro" routerLinkActive="ativo">Financeiro</a>
+      <a routerLink="/erp/relatorios" routerLinkActive="ativo">Relatorios</a>
+      <a routerLink="/erp/configuracoes" routerLinkActive="ativo">Configuracoes</a>
+    </nav>
+
+    <button type="button" class="botao-sair" (click)="sair()">Sair</button>
+  </aside>
+
+  <div class="conteudo">
+    <header class="topo">
+      <div>
+        <p class="topo__legenda">Ambiente autenticado</p>
+        <h1>{{ sessaoService.usuario()?.nome }}</h1>
+      </div>
+
+      <div class="topo__usuario">
+        <strong>{{ sessaoService.usuario()?.cargo }}</strong>
+        <span>{{ sessaoService.usuario()?.email }}</span>
+      </div>
+    </header>
+
+    <main class="conteudo__principal">
+      <router-outlet />
+    </main>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+@if (carregando()) {
+  <section class="estado estado--carregando">
+    <p>Carregando painel inicial do ERP...</p>
+  </section>
+} @else if (mensagemErro()) {
+  <section class="estado estado--erro">
+    <p>{{ mensagemErro() }}</p>
+    <button type="button" (click)="carregar()">Tentar novamente</button>
+  </section>
+} @else if (painel(); as dados) {
+  <section class="painel">
+    <header class="hero">
+      <div>
+        <p class="hero__legenda">Visao geral</p>
+        <h2>{{ dados.saudacao }}</h2>
+        <p class="hero__texto">
+          Acompanhe os principais indicadores, os atalhos operacionais e a navegacao principal do ERP.
+        </p>
+      </div>
+    </header>
+
+    <section class="indicadores">
+      @for (indicador of dados.indicadores; track indicador.titulo) {
+        <article class="card">
+          <p>{{ indicador.titulo }}</p>
+          <strong>{{ indicador.valor }}</strong>
+          <span>{{ indicador.variacao }}</span>
+        </article>
+      }
+    </section>
+
+    <section class="grade">
+      <article class="bloco">
+        <h3>Menu principal</h3>
+        <ul class="lista">
+          @for (item of dados.menu_principal; track item.rota) {
+            <li>
+              <strong>{{ item.rotulo }}</strong>
+              <span>{{ item.rota }}</span>
+            </li>
+          }
+        </ul>
+      </article>
+
+      <article class="bloco">
+        <h3>Atalhos operacionais</h3>
+        <ul class="lista">
+          @for (atalho of dados.atalhos; track atalho.titulo) {
+            <li>
+              <strong>{{ atalho.titulo }}</strong>
+              <span>{{ atalho.descricao }}</span>
+            </li>
+          }
+        </ul>
+      </article>
+    </section>
+  </section>
+}

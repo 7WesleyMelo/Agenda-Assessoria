@@ -1,0 +1,47 @@
+<main class="pagina-login">
+  <section class="painel-apresentacao">
+    <p class="etiqueta">ERP Agenda Assessoria</p>
+    <h1>Acesse o painel principal</h1>
+    <p class="descricao">
+      Fluxo inicial com autenticacao JWT, estrutura orientada por funcionalidades e base pronta
+      para evolucao do ERP.
+    </p>
+
+    <ul class="beneficios">
+      <li>Autenticacao desacoplada e preparada para expirar sessao.</li>
+      <li>Dashboard inicial carregado pela API apos o login.</li>
+      <li>Shell autenticado com menu lateral principal.</li>
+    </ul>
+  </section>
+
+  <section class="painel-formulario">
+    <form [formGroup]="formulario" (ngSubmit)="entrar()">
+      <header>
+        <h2>Entrar</h2>
+        <p>Use o usuario semeado no backend para validar o fluxo.</p>
+      </header>
+
+      <label class="campo">
+        <span>E-mail</span>
+        <input type="email" formControlName="email" placeholder="seu@email.com" />
+      </label>
+
+      <label class="campo">
+        <span>Senha</span>
+        <input type="password" formControlName="password" placeholder="Sua senha" />
+      </label>
+
+      @if (mensagemErro()) {
+        <p class="erro">{{ mensagemErro() }}</p>
+      }
+
+      <button type="submit" [disabled]="carregando()">
+        @if (carregando()) {
+          Entrando...
+        } @else {
+          Entrar no ERP
+        }
+      </button>
+    </form>
+  </section>
+</main>

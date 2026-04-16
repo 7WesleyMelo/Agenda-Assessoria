@@ -1,0 +1,118 @@
+.layout-erp {
+  display: grid;
+  grid-template-columns: 18rem minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.barra-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: #173647;
+  color: #fff;
+}
+
+.marca {
+  padding: 1rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.marca__rotulo {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.74rem;
+}
+
+.marca strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 1.3rem;
+}
+
+.menu {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.menu a,
+.botao-sair {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0 1rem;
+  border-radius: 16px;
+  color: inherit;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.menu a {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.menu a.ativo,
+.menu a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.botao-sair {
+  margin-top: auto;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: transparent;
+  cursor: pointer;
+}
+
+.conteudo {
+  padding: 1.5rem;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.5rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 24px;
+  background: rgba(255, 252, 247, 0.72);
+  box-shadow: var(--sombra-card);
+}
+
+.topo__legenda {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.74rem;
+}
+
+.topo h1 {
+  margin: 0.35rem 0 0;
+  font-size: 1.8rem;
+}
+
+.topo__usuario {
+  display: grid;
+  gap: 0.25rem;
+  text-align: right;
+  color: var(--cor-texto-suave);
+}
+
+.conteudo__principal {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .layout-erp {
+    grid-template-columns: 1fr;
+  }
+
+  .barra-lateral {
+    gap: 1rem;
+  }
+}

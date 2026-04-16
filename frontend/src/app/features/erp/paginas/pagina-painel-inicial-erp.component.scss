@@ -1,0 +1,134 @@
+.estado,
+.hero,
+.card,
+.bloco {
+  border: 1px solid var(--cor-borda);
+  border-radius: 24px;
+  background: rgba(255, 252, 247, 0.78);
+  box-shadow: var(--sombra-card);
+}
+
+.estado {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.estado button {
+  min-height: 2.8rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 14px;
+  background: var(--cor-secundaria);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.painel {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.hero {
+  padding: 1.75rem;
+}
+
+.hero__legenda {
+  margin: 0;
+  color: var(--cor-secundaria);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.hero h2 {
+  margin: 0.5rem 0 0;
+  font-size: 2rem;
+}
+
+.hero__texto {
+  max-width: 48rem;
+  margin: 0.8rem 0 0;
+  color: var(--cor-texto-suave);
+  line-height: 1.7;
+}
+
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.25rem;
+}
+
+.card p,
+.lista span {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+.card strong {
+  font-size: 1.8rem;
+}
+
+.card span {
+  color: var(--cor-primaria);
+  font-weight: 700;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.bloco {
+  padding: 1.5rem;
+}
+
+.bloco h3 {
+  margin: 0 0 1rem;
+}
+
+.lista {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lista li {
+  display: grid;
+  gap: 0.3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(80, 58, 37, 0.12);
+}
+
+.lista li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .indicadores,
+  .grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .indicadores,
+  .grade {
+    grid-template-columns: 1fr;
+  }
+}

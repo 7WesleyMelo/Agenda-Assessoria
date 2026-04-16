@@ -1,0 +1,137 @@
+.pagina-login {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(22rem, 28rem);
+  gap: 2rem;
+  align-items: stretch;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.painel-apresentacao,
+.painel-formulario {
+  border: 1px solid var(--cor-borda);
+  border-radius: 32px;
+  backdrop-filter: blur(12px);
+  box-shadow: var(--sombra-card);
+}
+
+.painel-apresentacao {
+  padding: 2.5rem;
+  background:
+    linear-gradient(135deg, rgba(31, 111, 95, 0.92), rgba(21, 51, 76, 0.92)),
+    var(--cor-primaria);
+  color: #fff;
+}
+
+.etiqueta {
+  display: inline-flex;
+  margin: 0 0 1rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.painel-apresentacao h1 {
+  margin: 0;
+  font-size: clamp(2.8rem, 7vw, 5.4rem);
+  line-height: 0.95;
+}
+
+.descricao {
+  max-width: 34rem;
+  margin: 1.25rem 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.beneficios {
+  margin: 2rem 0 0;
+  padding-left: 1.25rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.painel-formulario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(255, 252, 247, 0.88);
+}
+
+form {
+  width: min(100%, 22rem);
+}
+
+header h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header p {
+  margin: 0.6rem 0 0;
+  color: var(--cor-texto-suave);
+  line-height: 1.6;
+}
+
+.campo {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+}
+
+.campo span {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.campo input {
+  min-height: 3.4rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(88, 69, 53, 0.16);
+  border-radius: 18px;
+  background: #fff;
+  color: var(--cor-texto);
+  font: inherit;
+}
+
+.campo input:focus {
+  outline: 2px solid rgba(31, 111, 95, 0.22);
+  border-color: var(--cor-primaria);
+}
+
+.erro {
+  margin: 1rem 0 0;
+  color: #b42318;
+  font-weight: 600;
+}
+
+button {
+  width: 100%;
+  min-height: 3.4rem;
+  margin-top: 1.5rem;
+  border: 0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--cor-secundaria), #d98233);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.72;
+  cursor: wait;
+}
+
+@media (max-width: 900px) {
+  .pagina-login {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+}
