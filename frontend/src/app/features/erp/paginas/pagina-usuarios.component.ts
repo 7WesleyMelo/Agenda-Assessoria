@@ -23,8 +23,10 @@ export class PaginaUsuariosComponent implements OnInit {
 
   protected readonly carregando = signal(true);
   protected readonly salvando = signal(false);
+  protected readonly excluindo = signal(false);
   protected readonly usuarios = signal<Usuario[]>([]);
   protected readonly mensagemErro = signal<string | null>(null);
+  protected readonly mensagemErroExclusao = signal<string | null>(null);
   protected readonly usuarioEmEdicao = signal<Usuario | null>(null);
   protected readonly termoBusca = signal('');
   protected readonly paginaAtual = signal(1);
@@ -156,6 +158,7 @@ export class PaginaUsuariosComponent implements OnInit {
 
   protected solicitarExclusao(usuario: Usuario): void {
     this.usuarioPendenteExclusao.set(usuario);
+    this.mensagemErroExclusao.set(null);
   }
 
   protected confirmarExclusao(): void {
@@ -165,15 +168,19 @@ export class PaginaUsuariosComponent implements OnInit {
       return;
     }
 
-    this.mensagemErro.set(null);
+    this.excluindo.set(true);
+    this.mensagemErroExclusao.set(null);
 
     this.usuariosApiService.excluir(usuario.id).subscribe({
       next: () => {
+        this.excluindo.set(false);
         this.usuarioPendenteExclusao.set(null);
+        this.mensagemErroExclusao.set(null);
         this.carregarUsuarios();
       },
       error: (erro: HttpErrorResponse) => {
-        this.mensagemErro.set(
+        this.excluindo.set(false);
+        this.mensagemErroExclusao.set(
           erro.error?.message ??
             erro.error?.errors?.usuario?.[0] ??
             'Não foi possível excluir o usuário.'
@@ -184,6 +191,8 @@ export class PaginaUsuariosComponent implements OnInit {
 
   protected cancelarExclusao(): void {
     this.usuarioPendenteExclusao.set(null);
+    this.mensagemErroExclusao.set(null);
+    this.excluindo.set(false);
   }
 
   protected cancelarEdicao(): void {

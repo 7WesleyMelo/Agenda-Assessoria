@@ -12,7 +12,8 @@
 .campo,
 .campo-busca,
 form,
-.tabela-corpo {
+.tabela-corpo,
+.modal {
   display: grid;
 }
 
@@ -37,6 +38,11 @@ form,
 .painel-lista,
 .modal {
   padding: 1.5rem;
+}
+
+.modal {
+  gap: 1rem;
+  width: min(28rem, 100%);
 }
 
 .cabecalho {
@@ -79,7 +85,6 @@ form,
   border-radius: 18px;
   background: rgba(180, 35, 24, 0.08);
   color: #a6322a;
-  font-weight: 700;
 }
 
 .painel-lista__topo,
@@ -88,6 +93,10 @@ form,
 .drawer__topo,
 .drawer__acoes {
   justify-content: space-between;
+}
+
+.modal__acoes {
+  padding-top: 0.25rem;
 }
 
 .painel-lista__topo {
