@@ -1,0 +1,86 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/backend/Dockerfile
+    container_name: agenda-assessoria-api
+    working_dir: /aplicacao/backend
+    volumes:
+      - ./backend:/aplicacao/backend
+    ports:
+      - "${API_PORTA:-8000}:8000"
+    environment:
+      APP_AMBIENTE: "${APP_AMBIENTE:-local}"
+      APP_DEBUG: "${APP_DEBUG:-true}"
+      TZ: "${TZ:-America/Cuiaba}"
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: "${POSTGRES_DB:-agenda_assessoria}"
+      DB_USERNAME: "${POSTGRES_USER:-agenda}"
+      DB_PASSWORD: "${POSTGRES_PASSWORD:-agenda}"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "php -v || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    networks:
+      - agenda
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/frontend/Dockerfile
+    container_name: agenda-assessoria-web
+    working_dir: /aplicacao/frontend
+    volumes:
+      - ./frontend:/aplicacao/frontend
+    ports:
+      - "${WEB_PORTA:-4200}:4200"
+    environment:
+      TZ: "${TZ:-America/Cuiaba}"
+      CHOKIDAR_USEPOLLING: "true"
+      NG_CLI_ANALYTICS: "false"
+    depends_on:
+      api:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "node --version || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    networks:
+      - agenda
+
+  db:
+    image: postgres:16.3-alpine
+    container_name: agenda-assessoria-db
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-agenda_assessoria}"
+      POSTGRES_USER: "${POSTGRES_USER:-agenda}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-agenda}"
+      TZ: "${TZ:-America/Cuiaba}"
+    ports:
+      - "${DB_PORTA:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - agenda
+
+volumes:
+  postgres_data:
+
+networks:
+  agenda:
+    driver: bridge
