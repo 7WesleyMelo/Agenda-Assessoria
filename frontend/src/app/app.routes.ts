@@ -33,6 +33,14 @@ export const routes: Routes = [
         title: 'Painel Inicial | Agenda Assessoria',
       },
       {
+        path: 'perfil',
+        loadComponent: () =>
+          import('./features/autenticacao/paginas/pagina-perfil.component').then(
+            (module) => module.PaginaPerfilComponent
+          ),
+        title: 'Perfil | Agenda Assessoria',
+      },
+      {
         path: 'cadastros',
         component: PaginaPlaceholderComponent,
         data: {

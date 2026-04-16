@@ -57,7 +57,7 @@ export class LayoutErpComponent {
   protected abrirPerfil(event: MouseEvent): void {
     event.stopPropagation();
     this.dropdownAberto.set(false);
-    void this.router.navigate(['/erp/configuracoes']);
+    void this.router.navigate(['/erp/perfil']);
   }
 
   protected sair(): void {

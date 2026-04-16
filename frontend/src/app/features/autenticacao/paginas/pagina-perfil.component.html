@@ -1,0 +1,46 @@
+@if (carregando()) {
+  <section class="estado">
+    <p>Carregando perfil do usuario...</p>
+  </section>
+} @else if (mensagemErro()) {
+  <section class="estado">
+    <p>{{ mensagemErro() }}</p>
+    <button type="button" (click)="carregarPerfil()">Tentar novamente</button>
+  </section>
+} @else if (usuario(); as dadosUsuario) {
+  <section class="perfil">
+    <header class="perfil__cabecalho">
+      <div class="perfil__avatar">{{ dadosUsuario.nome.slice(0, 2).toUpperCase() }}</div>
+
+      <div>
+        <p class="perfil__legenda">Perfil do usuario</p>
+        <h2>{{ dadosUsuario.nome }}</h2>
+        <p class="perfil__descricao">
+          Informacoes basicas da sessao autenticada no ERP.
+        </p>
+      </div>
+    </header>
+
+    <section class="perfil__grade">
+      <article class="perfil__card">
+        <span>Nome</span>
+        <strong>{{ dadosUsuario.nome }}</strong>
+      </article>
+
+      <article class="perfil__card">
+        <span>E-mail</span>
+        <strong>{{ dadosUsuario.email }}</strong>
+      </article>
+
+      <article class="perfil__card">
+        <span>Cargo</span>
+        <strong>{{ dadosUsuario.cargo }}</strong>
+      </article>
+
+      <article class="perfil__card">
+        <span>Status da sessao</span>
+        <strong>Autenticado via JWT</strong>
+      </article>
+    </section>
+  </section>
+}

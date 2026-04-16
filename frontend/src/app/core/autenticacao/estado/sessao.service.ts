@@ -16,10 +16,14 @@ export class SessaoService {
 
   iniciarSessao(resposta: RespostaLogin): void {
     this.tokenState.set(resposta.access_token);
-    this.usuarioState.set(resposta.usuario);
+    this.definirUsuario(resposta.usuario);
 
     localStorage.setItem(CHAVE_TOKEN, resposta.access_token);
-    localStorage.setItem(CHAVE_USUARIO, JSON.stringify(resposta.usuario));
+  }
+
+  definirUsuario(usuario: Usuario): void {
+    this.usuarioState.set(usuario);
+    localStorage.setItem(CHAVE_USUARIO, JSON.stringify(usuario));
   }
 
   encerrarSessao(): void {

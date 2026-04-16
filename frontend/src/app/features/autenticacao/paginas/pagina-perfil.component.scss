@@ -1,0 +1,102 @@
+.estado,
+.perfil__cabecalho,
+.perfil__card {
+  border: 1px solid var(--cor-borda);
+  border-radius: 24px;
+  background: rgba(255, 252, 247, 0.82);
+  box-shadow: var(--sombra-card);
+}
+
+.estado {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.estado button {
+  min-height: 2.8rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 14px;
+  background: var(--cor-secundaria);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.perfil {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.perfil__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.75rem;
+}
+
+.perfil__avatar {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cor-secundaria), var(--cor-primaria));
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.perfil__legenda {
+  margin: 0;
+  color: var(--cor-secundaria);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.perfil__cabecalho h2 {
+  margin: 0.45rem 0 0;
+}
+
+.perfil__descricao {
+  margin: 0.5rem 0 0;
+  color: var(--cor-texto-suave);
+  line-height: 1.7;
+}
+
+.perfil__grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.perfil__card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.5rem;
+}
+
+.perfil__card span {
+  color: var(--cor-texto-suave);
+}
+
+.perfil__card strong {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 700px) {
+  .perfil__cabecalho {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .perfil__grade {
+    grid-template-columns: 1fr;
+  }
+}
