@@ -47,4 +47,13 @@ Entregas consolidadas nesta fase:
 - Validar experiência de execução para avaliadores
 - Organizar histórico de commits e marco final de entrega
 
-Status: pendente
+Status: concluída
+
+Entregas consolidadas nesta fase:
+
+- rate limit no endpoint de login
+- padronização de respostas de erro da API com `request_id`
+- rastreabilidade mínima por requisição com header `X-Request-Id`
+- health check com validação real da dependência de banco
+- bloqueio de acesso com token de usuário inativo
+- guia de avaliação para execução e validação dos fluxos principais

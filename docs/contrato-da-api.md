@@ -9,16 +9,50 @@
 
 ## Diretrizes
 
-- Endpoints devem usar nomenclatura previsivel e sem ambiguidade.
-- Requests devem ser validados antes de chegar a regras de negócio.
-- Responses devem ser serializados por uma camada dedicada.
-- Erros de validação, autenticação, autorização, domínio e infraestrutura devem ter formatos distintos, mas consistentes.
-- Paginação, filtros e ordenação devem seguir um contrato único.
+- Endpoints usam nomenclatura previsível e sem ambiguidade.
+- Requests são validados antes de chegar às regras de negócio.
+- Responses são serializados por camada dedicada.
+- Erros de validação, autenticação, rate limit, recurso inexistente e falha interna seguem formato consistente.
+- Toda resposta da API inclui o header `X-Request-Id` para rastreabilidade.
 
-## Itens a Detalhar na Fase Seguinte
+## Estrutura de erro
 
-- Recursos principais da API
-- Contrato de autenticação
-- Estrutura exata de erro
-- Estrutura de paginação
-- Campos expostos por recurso
+### Validação
+
+```json
+{
+  "message": "Os dados enviados são inválidos.",
+  "errors": {
+    "campo": [
+      "Mensagem de validação"
+    ]
+  },
+  "request_id": "uuid-da-requisicao"
+}
+```
+
+### Autenticação, rate limit, recurso inexistente e falha interna
+
+```json
+{
+  "message": "Mensagem padronizada do erro",
+  "request_id": "uuid-da-requisicao"
+}
+```
+
+## Recursos atuais
+
+- `POST /api/v1/auth/login`
+- `GET /api/v1/auth/perfil`
+- `GET /api/v1/erp/painel-inicial`
+- `GET /api/v1/usuarios`
+- `POST /api/v1/usuarios`
+- `PUT /api/v1/usuarios/{id}`
+- `DELETE /api/v1/usuarios/{id}`
+- `GET /api/v1/saude`
+
+## Observabilidade mínima
+
+- Header `X-Request-Id` em todas as respostas
+- Campo `request_id` nos erros da API
+- Health check com verificação real do banco

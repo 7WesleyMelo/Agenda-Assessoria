@@ -57,6 +57,7 @@ Credencial inicial semeada no backend:
 
 - `docs/arquitetura.md`
 - `docs/contrato-da-api.md`
+- `docs/guia-de-avaliacao.md`
 - `docs/modelo-de-dominio.md`
 - `docs/plano-de-entrega.md`
 - `docs/estrategia-de-commits.md`
