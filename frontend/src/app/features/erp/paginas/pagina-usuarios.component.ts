@@ -29,6 +29,7 @@ export class PaginaUsuariosComponent implements OnInit {
   protected readonly termoBusca = signal('');
   protected readonly paginaAtual = signal(1);
   protected readonly usuarioPendenteExclusao = signal<Usuario | null>(null);
+  protected readonly formularioAberto = signal(false);
   protected readonly cargosDisponiveis = cargosUsuario;
 
   protected readonly usuariosFiltrados = computed(() => {
@@ -92,6 +93,7 @@ export class PaginaUsuariosComponent implements OnInit {
 
   protected iniciarCadastro(): void {
     this.usuarioEmEdicao.set(null);
+    this.formularioAberto.set(true);
     this.formulario.reset({
       nome: '',
       email: '',
@@ -104,6 +106,7 @@ export class PaginaUsuariosComponent implements OnInit {
 
   protected editar(usuario: Usuario): void {
     this.usuarioEmEdicao.set(usuario);
+    this.formularioAberto.set(true);
     this.formulario.reset({
       nome: usuario.nome,
       email: usuario.email,
@@ -137,7 +140,7 @@ export class PaginaUsuariosComponent implements OnInit {
         }
 
         this.salvando.set(false);
-        this.iniciarCadastro();
+        this.fecharFormulario();
         this.carregarUsuarios();
       },
       error: (erro: HttpErrorResponse) => {
@@ -184,7 +187,20 @@ export class PaginaUsuariosComponent implements OnInit {
   }
 
   protected cancelarEdicao(): void {
-    this.iniciarCadastro();
+    this.fecharFormulario();
+  }
+
+  protected fecharFormulario(): void {
+    this.formularioAberto.set(false);
+    this.usuarioEmEdicao.set(null);
+    this.formulario.reset({
+      nome: '',
+      email: '',
+      cargo: 'Administrador',
+      ativo: true,
+      password: '',
+    });
+    this.mensagemErro.set(null);
   }
 
   protected atualizarBusca(event: Event): void {

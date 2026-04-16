@@ -18,45 +18,47 @@
     <p class="mensagem-erro">{{ mensagemErro() }}</p>
   }
 
-  <section class="grade">
-    <article class="painel-lista">
-      <div class="painel-lista__topo">
-        <div>
-          <h3>Usuarios cadastrados</h3>
-          <span>{{ usuariosFiltrados().length }} registros encontrados</span>
-        </div>
-
-        <label class="campo-busca">
-          <span>Buscar</span>
-          <input
-            type="search"
-            [value]="termoBusca()"
-            (input)="atualizarBusca($event)"
-            placeholder="Nome, e-mail ou cargo"
-          />
-        </label>
+  <article class="painel-lista">
+    <div class="painel-lista__topo">
+      <div>
+        <h3>Usuarios cadastrados</h3>
+        <span>{{ usuariosFiltrados().length }} registros encontrados</span>
       </div>
 
-      @if (carregando()) {
-        <p class="estado">Carregando usuarios...</p>
-      } @else if (usuariosFiltrados().length === 0) {
-        <p class="estado">Nenhum usuario encontrado com o filtro informado.</p>
-      } @else {
-        <div class="tabela">
+      <label class="campo-busca">
+        <span>Buscar</span>
+        <input
+          type="search"
+          [value]="termoBusca()"
+          (input)="atualizarBusca($event)"
+          placeholder="Nome, e-mail ou cargo"
+        />
+      </label>
+    </div>
+
+    @if (carregando()) {
+      <p class="estado">Carregando usuarios...</p>
+    } @else if (usuariosFiltrados().length === 0) {
+      <p class="estado">Nenhum usuario encontrado com o filtro informado.</p>
+    } @else {
+      <div class="tabela-wrapper">
+        <div class="tabela-cabecalho">
+          <span>Nome</span>
+          <span>E-mail</span>
+          <span>Cargo</span>
+          <span>Status</span>
+          <span class="tabela-cabecalho__acoes">Acoes</span>
+        </div>
+
+        <div class="tabela-corpo">
           @for (usuario of usuariosPaginados(); track usuario.id) {
             <article class="linha">
-              <div>
-                <strong>{{ usuario.nome }}</strong>
-                <span>{{ usuario.email }}</span>
-              </div>
-
-              <div class="linha__meta">
-                <span>{{ usuario.cargo }}</span>
-                <span class="status" [class.status--inativo]="!usuario.ativo">
-                  {{ usuario.ativo ? 'Ativo' : 'Inativo' }}
-                </span>
-              </div>
-
+              <span class="linha__principal">{{ usuario.nome }}</span>
+              <span>{{ usuario.email }}</span>
+              <span>{{ usuario.cargo }}</span>
+              <span class="status" [class.status--inativo]="!usuario.ativo">
+                {{ usuario.ativo ? 'Ativo' : 'Inativo' }}
+              </span>
               <div class="linha__acoes">
                 <button type="button" class="botao botao--texto" (click)="editar(usuario)">Editar</button>
                 <button
@@ -70,79 +72,90 @@
             </article>
           }
         </div>
-
-        <footer class="paginacao">
-          <button
-            type="button"
-            class="botao botao--paginacao"
-            [disabled]="paginaAtual() === 1"
-            (click)="irParaPagina(paginaAtual() - 1)"
-          >
-            Anterior
-          </button>
-
-          <span>Pagina {{ paginaAtual() }} de {{ totalPaginas() }}</span>
-
-          <button
-            type="button"
-            class="botao botao--paginacao"
-            [disabled]="paginaAtual() === totalPaginas()"
-            (click)="irParaPagina(paginaAtual() + 1)"
-          >
-            Proxima
-          </button>
-        </footer>
-      }
-    </article>
-
-    <article class="painel-formulario">
-      <div class="painel-formulario__topo">
-        <h3>{{ usuarioEmEdicao() ? 'Editar usuario' : 'Novo usuario' }}</h3>
-        @if (usuarioEmEdicao()) {
-          <button type="button" class="botao botao--texto" (click)="cancelarEdicao()">Cancelar</button>
-        }
       </div>
 
-      <form [formGroup]="formulario" (ngSubmit)="salvar()">
-        <label class="campo">
-          <span>Nome</span>
-          <input type="text" formControlName="nome" />
-        </label>
-
-        <label class="campo">
-          <span>E-mail</span>
-          <input type="email" formControlName="email" />
-        </label>
-
-        <label class="campo">
-          <span>Cargo</span>
-          <select formControlName="cargo">
-            @for (cargo of cargosDisponiveis; track cargo) {
-              <option [value]="cargo">{{ cargo }}</option>
-            }
-          </select>
-        </label>
-
-        <label class="campo campo--checkbox">
-          <input type="checkbox" formControlName="ativo" />
-          <span>Usuario ativo</span>
-        </label>
-
-        <label class="campo">
-          <span>{{ usuarioEmEdicao() ? 'Nova senha' : 'Senha inicial' }}</span>
-          <input
-            type="password"
-            formControlName="password"
-            [placeholder]="usuarioEmEdicao() ? 'Preencha apenas se quiser alterar' : 'Minimo de 6 caracteres'"
-          />
-        </label>
-
-        <button type="submit" class="botao botao--primario" [disabled]="salvando()">
-          {{ salvando() ? 'Salvando...' : usuarioEmEdicao() ? 'Salvar alteracoes' : 'Cadastrar usuario' }}
+      <footer class="paginacao">
+        <button
+          type="button"
+          class="botao botao--paginacao"
+          [disabled]="paginaAtual() === 1"
+          (click)="irParaPagina(paginaAtual() - 1)"
+        >
+          Anterior
         </button>
-      </form>
-    </article>
-  </section>
+
+        <span>Pagina {{ paginaAtual() }} de {{ totalPaginas() }}</span>
+
+        <button
+          type="button"
+          class="botao botao--paginacao"
+          [disabled]="paginaAtual() === totalPaginas()"
+          (click)="irParaPagina(paginaAtual() + 1)"
+        >
+          Proxima
+        </button>
+      </footer>
+    }
+  </article>
+
+  @if (formularioAberto()) {
+    <div class="drawer-backdrop" (click)="fecharFormulario()">
+      <aside class="drawer" (click)="$event.stopPropagation()">
+        <div class="drawer__topo">
+          <div>
+            <p class="drawer__legenda">Formulario lateral</p>
+            <h3>{{ usuarioEmEdicao() ? 'Editar usuario' : 'Novo usuario' }}</h3>
+          </div>
+
+          <button type="button" class="botao-fechar" (click)="fecharFormulario()">Fechar</button>
+        </div>
+
+        <form [formGroup]="formulario" (ngSubmit)="salvar()">
+          <label class="campo">
+            <span>Nome</span>
+            <input type="text" formControlName="nome" />
+          </label>
+
+          <label class="campo">
+            <span>E-mail</span>
+            <input type="email" formControlName="email" />
+          </label>
+
+          <label class="campo">
+            <span>Cargo</span>
+            <select formControlName="cargo">
+              @for (cargo of cargosDisponiveis; track cargo) {
+                <option [value]="cargo">{{ cargo }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="campo campo--checkbox">
+            <input type="checkbox" formControlName="ativo" />
+            <span>Usuario ativo</span>
+          </label>
+
+          <label class="campo">
+            <span>{{ usuarioEmEdicao() ? 'Nova senha' : 'Senha inicial' }}</span>
+            <input
+              type="password"
+              formControlName="password"
+              [placeholder]="usuarioEmEdicao() ? 'Preencha apenas se quiser alterar' : 'Minimo de 6 caracteres'"
+            />
+          </label>
+
+          <div class="drawer__acoes">
+            <button type="button" class="botao botao--secundario" (click)="fecharFormulario()">
+              Cancelar
+            </button>
+            <button type="submit" class="botao botao--primario" [disabled]="salvando()">
+              {{ salvando() ? 'Salvando...' : usuarioEmEdicao() ? 'Salvar alteracoes' : 'Cadastrar usuario' }}
+            </button>
+          </div>
+        </form>
+      </aside>
+    </div>
+  }
 
   @if (usuarioPendenteExclusao(); as usuario) {
     <div class="modal-backdrop" (click)="cancelarExclusao()">
