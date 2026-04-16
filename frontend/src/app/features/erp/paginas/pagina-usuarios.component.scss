@@ -1,26 +1,45 @@
 .cabecalho,
 .painel-lista,
-.painel-formulario {
+.painel-formulario,
+.modal {
   border: 1px solid var(--cor-borda);
   border-radius: 24px;
   background: rgba(255, 252, 247, 0.82);
   box-shadow: var(--sombra-card);
 }
 
-.usuarios {
+.usuarios,
+.tabela,
+form,
+.campo,
+.campo-busca {
   display: grid;
+}
+
+.usuarios {
   gap: 1.5rem;
 }
 
-.cabecalho {
+.cabecalho,
+.painel-lista__topo,
+.painel-formulario__topo,
+.paginacao,
+.modal__acoes {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.75rem;
+  align-items: center;
 }
 
-.cabecalho__legenda {
+.cabecalho,
+.painel-lista,
+.painel-formulario,
+.modal {
+  padding: 1.5rem;
+}
+
+.cabecalho__legenda,
+.modal__legenda {
   margin: 0;
   color: var(--cor-secundaria);
   text-transform: uppercase;
@@ -29,15 +48,27 @@
   font-weight: 800;
 }
 
-.cabecalho h2 {
-  margin: 0.45rem 0 0;
+.cabecalho h2,
+.painel-lista__topo h3,
+.painel-formulario__topo h3,
+.modal h3 {
+  margin: 0;
 }
 
-.cabecalho__descricao {
-  margin: 0.75rem 0 0;
+.cabecalho__descricao,
+.estado,
+.painel-lista__topo span,
+.campo-busca span,
+.linha > div:first-child span,
+.linha__meta span:first-child,
+.modal p:last-of-type {
   color: var(--cor-texto-suave);
+}
+
+.cabecalho__descricao,
+.modal p:last-of-type {
+  margin: 0.75rem 0 0;
   line-height: 1.7;
-  max-width: 48rem;
 }
 
 .mensagem-erro {
@@ -55,36 +86,33 @@
   gap: 1rem;
 }
 
-.painel-lista,
-.painel-formulario {
-  padding: 1.5rem;
-}
-
 .painel-lista__topo,
 .painel-formulario__topo {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: center;
   margin-bottom: 1rem;
 }
 
-.painel-lista__topo h3,
-.painel-formulario__topo h3 {
-  margin: 0;
+.campo-busca,
+.campo,
+.linha__meta {
+  gap: 0.35rem;
 }
 
-.painel-lista__topo span {
-  color: var(--cor-texto-suave);
+.campo-busca input,
+.campo input {
+  border: 1px solid rgba(88, 69, 53, 0.16);
+  border-radius: 16px;
+  background: #fff;
+  color: var(--cor-texto);
+  font: inherit;
 }
 
-.estado {
-  margin: 0;
-  color: var(--cor-texto-suave);
+.campo-busca input {
+  min-width: 16rem;
+  min-height: 3rem;
+  padding: 0 1rem;
 }
 
 .tabela {
-  display: grid;
   gap: 0.8rem;
 }
 
@@ -104,15 +132,9 @@
   display: block;
 }
 
-.linha > div:first-child span,
-.linha__meta span:first-child {
-  color: var(--cor-texto-suave);
-  margin-top: 0.2rem;
-}
-
-.linha__meta {
-  display: grid;
-  gap: 0.35rem;
+.linha__acoes {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .status {
@@ -131,19 +153,9 @@
   color: #a85622;
 }
 
-.linha__acoes {
-  display: flex;
-  gap: 0.5rem;
-}
-
-form {
-  display: grid;
-  gap: 1rem;
-}
-
+form,
 .campo {
-  display: grid;
-  gap: 0.45rem;
+  gap: 1rem;
 }
 
 .campo span {
@@ -154,11 +166,6 @@ form {
 .campo input {
   min-height: 3.2rem;
   padding: 0 1rem;
-  border: 1px solid rgba(88, 69, 53, 0.16);
-  border-radius: 16px;
-  background: #fff;
-  color: var(--cor-texto);
-  font: inherit;
 }
 
 .campo--checkbox {
@@ -192,7 +199,8 @@ form {
   color: #fff;
 }
 
-.botao--secundario {
+.botao--secundario,
+.botao--paginacao {
   background: rgba(196, 106, 42, 0.12);
   color: #8e4b1f;
 }
@@ -213,6 +221,31 @@ form {
   color: #b24121;
 }
 
+.botao--paginacao {
+  min-height: 2.75rem;
+}
+
+.botao--paginacao:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.botao--perigo {
+  background: linear-gradient(135deg, #b24121, #d16432);
+  color: #fff;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(23, 54, 71, 0.28);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+}
+
 @media (max-width: 1100px) {
   .grade {
     grid-template-columns: 1fr;
@@ -223,16 +256,15 @@ form {
   .cabecalho,
   .painel-lista__topo,
   .painel-formulario__topo,
-  .linha {
+  .linha,
+  .paginacao,
+  .modal__acoes {
+    display: grid;
     grid-template-columns: 1fr;
-    flex-direction: column;
     align-items: flex-start;
   }
 
-  .cabecalho {
-    display: grid;
-  }
-
+  .campo-busca input,
   .linha__acoes {
     width: 100%;
   }

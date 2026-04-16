@@ -21,15 +21,29 @@
   <section class="grade">
     <article class="painel-lista">
       <div class="painel-lista__topo">
-        <h3>Usuarios cadastrados</h3>
-        <span>{{ usuarios().length }} registros</span>
+        <div>
+          <h3>Usuarios cadastrados</h3>
+          <span>{{ usuariosFiltrados().length }} registros encontrados</span>
+        </div>
+
+        <label class="campo-busca">
+          <span>Buscar</span>
+          <input
+            type="search"
+            [value]="termoBusca()"
+            (input)="atualizarBusca($event)"
+            placeholder="Nome, e-mail ou cargo"
+          />
+        </label>
       </div>
 
       @if (carregando()) {
         <p class="estado">Carregando usuarios...</p>
+      } @else if (usuariosFiltrados().length === 0) {
+        <p class="estado">Nenhum usuario encontrado com o filtro informado.</p>
       } @else {
         <div class="tabela">
-          @for (usuario of usuarios(); track usuario.id) {
+          @for (usuario of usuariosPaginados(); track usuario.id) {
             <article class="linha">
               <div>
                 <strong>{{ usuario.nome }}</strong>
@@ -45,13 +59,39 @@
 
               <div class="linha__acoes">
                 <button type="button" class="botao botao--texto" (click)="editar(usuario)">Editar</button>
-                <button type="button" class="botao botao--texto-alerta" (click)="excluir(usuario)">
+                <button
+                  type="button"
+                  class="botao botao--texto-alerta"
+                  (click)="solicitarExclusao(usuario)"
+                >
                   Excluir
                 </button>
               </div>
             </article>
           }
         </div>
+
+        <footer class="paginacao">
+          <button
+            type="button"
+            class="botao botao--paginacao"
+            [disabled]="paginaAtual() === 1"
+            (click)="irParaPagina(paginaAtual() - 1)"
+          >
+            Anterior
+          </button>
+
+          <span>Pagina {{ paginaAtual() }} de {{ totalPaginas() }}</span>
+
+          <button
+            type="button"
+            class="botao botao--paginacao"
+            [disabled]="paginaAtual() === totalPaginas()"
+            (click)="irParaPagina(paginaAtual() + 1)"
+          >
+            Proxima
+          </button>
+        </footer>
       }
     </article>
 
@@ -99,4 +139,26 @@
       </form>
     </article>
   </section>
+
+  @if (usuarioPendenteExclusao(); as usuario) {
+    <div class="modal-backdrop" (click)="cancelarExclusao()">
+      <section class="modal" (click)="$event.stopPropagation()">
+        <p class="modal__legenda">Confirmacao de exclusao</p>
+        <h3>Excluir {{ usuario.nome }}?</h3>
+        <p>
+          Esta acao remove o usuario do cadastro. Se ele for o usuario autenticado, a API vai
+          bloquear a exclusao automaticamente.
+        </p>
+
+        <div class="modal__acoes">
+          <button type="button" class="botao botao--secundario" (click)="cancelarExclusao()">
+            Cancelar
+          </button>
+          <button type="button" class="botao botao--perigo" (click)="confirmarExclusao()">
+            Confirmar exclusao
+          </button>
+        </div>
+      </section>
+    </div>
+  }
 </section>

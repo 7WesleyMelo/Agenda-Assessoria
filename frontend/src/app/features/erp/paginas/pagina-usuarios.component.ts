@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SessaoService } from '../../../core/autenticacao/estado/sessao.service';
 import { Usuario } from '../../../core/modelos/usuario.model';
@@ -14,6 +14,8 @@ import { PayloadSalvarUsuario, UsuariosApiService } from '../servicos/usuarios-a
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginaUsuariosComponent implements OnInit {
+  private static readonly ITENS_POR_PAGINA = 6;
+
   private readonly formBuilder = inject(FormBuilder);
   private readonly usuariosApiService = inject(UsuariosApiService);
   private readonly sessaoService = inject(SessaoService);
@@ -23,6 +25,39 @@ export class PaginaUsuariosComponent implements OnInit {
   protected readonly usuarios = signal<Usuario[]>([]);
   protected readonly mensagemErro = signal<string | null>(null);
   protected readonly usuarioEmEdicao = signal<Usuario | null>(null);
+  protected readonly termoBusca = signal('');
+  protected readonly paginaAtual = signal(1);
+  protected readonly usuarioPendenteExclusao = signal<Usuario | null>(null);
+
+  protected readonly usuariosFiltrados = computed(() => {
+    const termo = this.termoBusca().trim().toLowerCase();
+
+    if (termo === '') {
+      return this.usuarios();
+    }
+
+    return this.usuarios().filter((usuario) =>
+      [usuario.nome, usuario.email, usuario.cargo].some((valor) =>
+        valor.toLowerCase().includes(termo)
+      )
+    );
+  });
+
+  protected readonly totalPaginas = computed(() => {
+    const total = Math.ceil(
+      this.usuariosFiltrados().length / PaginaUsuariosComponent.ITENS_POR_PAGINA
+    );
+
+    return Math.max(total, 1);
+  });
+
+  protected readonly usuariosPaginados = computed(() => {
+    const pagina = Math.min(this.paginaAtual(), this.totalPaginas());
+    const inicio = (pagina - 1) * PaginaUsuariosComponent.ITENS_POR_PAGINA;
+    const fim = inicio + PaginaUsuariosComponent.ITENS_POR_PAGINA;
+
+    return this.usuariosFiltrados().slice(inicio, fim);
+  });
 
   protected readonly formulario = this.formBuilder.nonNullable.group({
     nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -43,6 +78,7 @@ export class PaginaUsuariosComponent implements OnInit {
     this.usuariosApiService.listar().subscribe({
       next: (usuarios) => {
         this.usuarios.set(usuarios);
+        this.paginaAtual.set(1);
         this.carregando.set(false);
       },
       error: (erro: HttpErrorResponse) => {
@@ -113,10 +149,14 @@ export class PaginaUsuariosComponent implements OnInit {
     });
   }
 
-  protected excluir(usuario: Usuario): void {
-    const confirmou = confirm(`Deseja excluir o usuario ${usuario.nome}?`);
+  protected solicitarExclusao(usuario: Usuario): void {
+    this.usuarioPendenteExclusao.set(usuario);
+  }
 
-    if (!confirmou) {
+  protected confirmarExclusao(): void {
+    const usuario = this.usuarioPendenteExclusao();
+
+    if (!usuario) {
       return;
     }
 
@@ -124,6 +164,7 @@ export class PaginaUsuariosComponent implements OnInit {
 
     this.usuariosApiService.excluir(usuario.id).subscribe({
       next: () => {
+        this.usuarioPendenteExclusao.set(null);
         this.carregarUsuarios();
       },
       error: (erro: HttpErrorResponse) => {
@@ -136,8 +177,26 @@ export class PaginaUsuariosComponent implements OnInit {
     });
   }
 
+  protected cancelarExclusao(): void {
+    this.usuarioPendenteExclusao.set(null);
+  }
+
   protected cancelarEdicao(): void {
     this.iniciarCadastro();
+  }
+
+  protected atualizarBusca(event: Event): void {
+    const valor = (event.target as HTMLInputElement).value;
+    this.termoBusca.set(valor);
+    this.paginaAtual.set(1);
+  }
+
+  protected irParaPagina(pagina: number): void {
+    if (pagina < 1 || pagina > this.totalPaginas()) {
+      return;
+    }
+
+    this.paginaAtual.set(pagina);
   }
 
   private montarPayload(): PayloadSalvarUsuario {
