@@ -8,7 +8,7 @@ use Illuminate\Validation\ValidationException;
 class UsuarioService
 {
     /**
-     * @param array<string, mixed> $dados
+     * @param  array<string, mixed>  $dados
      */
     public function criar(array $dados): User
     {
@@ -22,7 +22,7 @@ class UsuarioService
     }
 
     /**
-     * @param array<string, mixed> $dados
+     * @param  array<string, mixed>  $dados
      */
     public function atualizar(User $usuario, array $dados): User
     {

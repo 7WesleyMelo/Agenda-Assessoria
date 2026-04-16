@@ -10,8 +10,7 @@ class AutenticacaoService
 {
     public function __construct(
         private readonly JwtService $jwtService
-    ) {
-    }
+    ) {}
 
     /**
      * @return array{access_token:string, expires_in:int, usuario:User}

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\AutenticaComJwt;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,11 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'jwt.auth' => \App\Http\Middleware\AutenticaComJwt::class,
+            'jwt.auth' => AutenticaComJwt::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (\Illuminate\Auth\AuthenticationException $exception) {
+        $exceptions->render(function (AuthenticationException $exception) {
             return response()->json([
                 'message' => $exception->getMessage(),
             ], 401);

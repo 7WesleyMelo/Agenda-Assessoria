@@ -12,8 +12,7 @@ class LoginController extends Controller
 {
     public function __construct(
         private readonly AutenticacaoService $autenticacaoService
-    ) {
-    }
+    ) {}
 
     public function __invoke(LoginRequest $request): JsonResponse
     {

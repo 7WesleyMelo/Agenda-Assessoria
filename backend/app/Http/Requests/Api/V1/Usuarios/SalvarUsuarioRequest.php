@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api\V1\Usuarios;
 
+use App\Support\Usuarios\CargosUsuario;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Support\Usuarios\CargosUsuario;
 
 class SalvarUsuarioRequest extends FormRequest
 {

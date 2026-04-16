@@ -16,8 +16,7 @@ class UsuarioController extends Controller
 {
     public function __construct(
         private readonly UsuarioService $usuarioService
-    ) {
-    }
+    ) {}
 
     public function index(): AnonymousResourceCollection
     {
