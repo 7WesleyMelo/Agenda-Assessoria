@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { PainelInicial } from '../../../core/modelos/painel-inicial.model';
 import { PainelInicialApiService } from '../servicos/painel-inicial-api.service';
 
@@ -16,6 +16,20 @@ export class PaginaPainelInicialErpComponent implements OnInit {
   protected readonly carregando = signal(true);
   protected readonly mensagemErro = signal<string | null>(null);
   protected readonly painel = signal<PainelInicial | null>(null);
+
+  protected readonly resumoExecutivo = computed(() => {
+    const dados = this.painel();
+
+    if (!dados) {
+      return [];
+    }
+
+    return [
+      { rotulo: 'Perfil ativo', valor: dados.usuario.cargo },
+      { rotulo: 'Atalhos prontos', valor: String(dados.atalhos.length) },
+      { rotulo: 'Módulos visíveis', valor: String(dados.menu_principal.length) },
+    ];
+  });
 
   ngOnInit(): void {
     this.carregar();

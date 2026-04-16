@@ -53,7 +53,10 @@
         <div class="tabela-corpo">
           @for (usuario of usuariosPaginados(); track usuario.id) {
             <article class="linha">
-              <span class="linha__principal">{{ usuario.nome }}</span>
+              <div class="linha__identidade">
+                <span class="linha__avatar">{{ usuario.nome.slice(0, 2).toUpperCase() }}</span>
+                <span class="linha__principal">{{ usuario.nome }}</span>
+              </div>
               <span>{{ usuario.email }}</span>
               <span>{{ usuario.cargo }}</span>
               <span class="status" [class.status--inativo]="!usuario.ativo">

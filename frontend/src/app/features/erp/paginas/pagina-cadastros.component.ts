@@ -14,16 +14,19 @@ export class PaginaCadastrosComponent {
     {
       titulo: 'Usuários',
       descricao: 'Gerencie acesso, cargo e status dos usuários internos do ERP.',
+      acao: 'Acessar módulo',
       rota: '/erp/cadastros/usuarios',
     },
     {
       titulo: 'Clientes',
       descricao: 'Espaço reservado para o cadastro dos clientes atendidos pelo ERP.',
+      acao: 'Estrutura em evolução',
       rota: '/erp/cadastros',
     },
     {
       titulo: 'Fornecedores',
       descricao: 'Espaço reservado para o cadastro dos fornecedores da operação.',
+      acao: 'Estrutura em evolução',
       rota: '/erp/cadastros',
     },
   ];

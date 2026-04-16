@@ -3,16 +3,30 @@
     <div class="marca">
       <p class="marca__rotulo">Agenda</p>
       <strong>ERP Assessoria</strong>
+      <span class="marca__descricao">Gestão operacional com foco em clareza, agilidade e controle.</span>
     </div>
 
     <nav class="menu">
       <a routerLink="/erp" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">
-        Painel inicial
+        <span class="menu__icone menu__icone--painel"></span>
+        <span>Painel inicial</span>
       </a>
-      <a routerLink="/erp/cadastros" routerLinkActive="ativo">Cadastros</a>
-      <a routerLink="/erp/financeiro" routerLinkActive="ativo">Financeiro</a>
-      <a routerLink="/erp/relatorios" routerLinkActive="ativo">Relatórios</a>
-      <a routerLink="/erp/configuracoes" routerLinkActive="ativo">Configurações</a>
+      <a routerLink="/erp/cadastros" routerLinkActive="ativo">
+        <span class="menu__icone menu__icone--cadastros"></span>
+        <span>Cadastros</span>
+      </a>
+      <a routerLink="/erp/financeiro" routerLinkActive="ativo">
+        <span class="menu__icone menu__icone--financeiro"></span>
+        <span>Financeiro</span>
+      </a>
+      <a routerLink="/erp/relatorios" routerLinkActive="ativo">
+        <span class="menu__icone menu__icone--relatorios"></span>
+        <span>Relatórios</span>
+      </a>
+      <a routerLink="/erp/configuracoes" routerLinkActive="ativo">
+        <span class="menu__icone menu__icone--configuracoes"></span>
+        <span>Configurações</span>
+      </a>
     </nav>
   </aside>
 

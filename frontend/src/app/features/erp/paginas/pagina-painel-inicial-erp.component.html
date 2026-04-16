@@ -17,6 +17,15 @@
           Acompanhe os principais indicadores, os atalhos operacionais e a navegação principal do ERP.
         </p>
       </div>
+
+      <div class="hero__resumo">
+        @for (item of resumoExecutivo(); track item.rotulo) {
+          <article class="hero__item">
+            <span>{{ item.rotulo }}</span>
+            <strong>{{ item.valor }}</strong>
+          </article>
+        }
+      </div>
     </header>
 
     <section class="indicadores">
