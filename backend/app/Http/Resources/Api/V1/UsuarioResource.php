@@ -20,6 +20,7 @@ class UsuarioResource extends JsonResource
             'nome' => $this->name,
             'email' => $this->email,
             'cargo' => $this->cargo,
+            'ativo' => (bool) $this->ativo,
         ];
     }
 }
