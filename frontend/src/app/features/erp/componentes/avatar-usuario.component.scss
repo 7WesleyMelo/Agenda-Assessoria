@@ -1,0 +1,19 @@
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c46a2a, #1f6f5f);
+  color: #f7eee1;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: 0 10px 24px rgba(27, 106, 97, 0.22);
+}
+
+.avatar--grande {
+  width: 3.9rem;
+  height: 3.9rem;
+  font-size: 1.02rem;
+}

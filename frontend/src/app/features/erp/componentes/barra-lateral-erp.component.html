@@ -1,0 +1,20 @@
+<aside class="barra-lateral">
+  <div class="marca">
+    <p class="marca__rotulo">Agenda</p>
+    <strong>ERP Assessoria</strong>
+    <span class="marca__descricao">Gestão operacional com foco em clareza, agilidade e controle.</span>
+  </div>
+
+  <nav class="menu">
+    @for (item of itensMenu; track item.rota) {
+      <a
+        [routerLink]="item.rota"
+        routerLinkActive="ativo"
+        [routerLinkActiveOptions]="{ exact: item.exato ?? false }"
+      >
+        <span class="menu__icone" [class]="'menu__icone menu__icone--' + item.icone"></span>
+        <span>{{ item.rotulo }}</span>
+      </a>
+    }
+  </nav>
+</aside>

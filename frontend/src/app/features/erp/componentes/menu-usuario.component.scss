@@ -1,0 +1,121 @@
+.menu-usuario {
+  position: relative;
+  z-index: 31;
+}
+
+.menu-usuario__gatilho {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  min-height: 4rem;
+  padding: 0.5rem 0.6rem 0.5rem 1.1rem;
+  border: 1px solid rgba(94, 74, 56, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+}
+
+.menu-usuario__gatilho:hover {
+  border-color: rgba(27, 106, 97, 0.18);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.menu-usuario__info {
+  display: grid;
+  gap: 0.18rem;
+  text-align: right;
+}
+
+.menu-usuario__info strong {
+  color: var(--cor-texto);
+  font-size: 0.95rem;
+}
+
+.menu-usuario__info span {
+  color: var(--cor-texto-suave);
+  font-size: 0.86rem;
+}
+
+.menu-usuario__dropdown {
+  position: absolute;
+  top: calc(100% + 0.85rem);
+  right: 0;
+  width: min(21rem, 82vw);
+  padding: 1rem;
+  border: 1px solid rgba(94, 74, 56, 0.12);
+  border-radius: var(--raio-lg);
+  background: rgba(255, 253, 249, 0.98);
+  box-shadow: var(--sombra-elevada);
+  backdrop-filter: blur(14px);
+  z-index: 40;
+  animation: elevar-entrada var(--transicao-lenta);
+}
+
+.menu-usuario__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(94, 74, 56, 0.12);
+}
+
+.menu-usuario__cabecalho strong,
+.menu-usuario__cabecalho span {
+  display: block;
+}
+
+.menu-usuario__cabecalho strong {
+  font-size: 1rem;
+}
+
+.menu-usuario__cabecalho span {
+  margin-top: 0.25rem;
+  color: var(--cor-texto-suave);
+}
+
+.menu-usuario__acao {
+  width: 100%;
+  min-height: 3rem;
+  margin-top: 0.7rem;
+  padding: 0 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--raio-sm);
+  background: rgba(27, 106, 97, 0.08);
+  color: var(--cor-texto);
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-usuario__acao:hover {
+  border-color: rgba(27, 106, 97, 0.16);
+  background: rgba(27, 106, 97, 0.12);
+}
+
+.menu-usuario__acao--sair {
+  background: rgba(186, 103, 49, 0.1);
+  color: var(--cor-secundaria-escura);
+}
+
+.menu-usuario__acao--sair:hover {
+  border-color: rgba(186, 103, 49, 0.16);
+  background: rgba(186, 103, 49, 0.16);
+}
+
+@media (max-width: 780px) {
+  .menu-usuario {
+    width: 100%;
+  }
+
+  .menu-usuario__gatilho {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .menu-usuario__dropdown {
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
+}

@@ -1,0 +1,23 @@
+@if (usuario(); as usuarioSelecionado) {
+  <div class="modal-backdrop" (click)="cancelarModal()">
+    <section class="modal" (click)="$event.stopPropagation()">
+      <p class="modal__legenda">Confirmação de exclusão</p>
+      <h3>Excluir {{ usuarioSelecionado.nome }}?</h3>
+      <p>
+        Esta ação remove o usuário do cadastro. Se ele for o usuário autenticado, a API vai bloquear a
+        exclusão automaticamente.
+      </p>
+
+      @if (mensagemErro()) {
+        <p class="mensagem-erro">{{ mensagemErro() }}</p>
+      }
+
+      <div class="modal__acoes">
+        <button type="button" class="botao botao--secundario" (click)="cancelarModal()">Cancelar</button>
+        <button type="button" class="botao botao--perigo" [disabled]="excluindo()" (click)="confirmarExclusao()">
+          {{ excluindo() ? 'Excluindo...' : 'Confirmar exclusão' }}
+        </button>
+      </div>
+    </section>
+  </div>
+}

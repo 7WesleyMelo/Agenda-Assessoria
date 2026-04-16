@@ -1,0 +1,59 @@
+@if (carregando()) {
+  <p class="estado">Carregando usuários...</p>
+} @else if (!possuiUsuarios()) {
+  <p class="estado">Nenhum usuário encontrado com o filtro informado.</p>
+} @else {
+  <div class="tabela-wrapper">
+    <div class="tabela-cabecalho">
+      <span>Nome</span>
+      <span>E-mail</span>
+      <span>Cargo</span>
+      <span>Status</span>
+      <span class="tabela-cabecalho__acoes">Ações</span>
+    </div>
+
+    <div class="tabela-corpo">
+      @for (usuario of usuarios(); track usuario.id) {
+        <article class="linha">
+          <div class="linha__identidade">
+            <span class="linha__avatar">{{ obterIniciais(usuario.nome) }}</span>
+            <span class="linha__principal">{{ usuario.nome }}</span>
+          </div>
+          <span>{{ usuario.email }}</span>
+          <span>{{ usuario.cargo }}</span>
+          <span class="status" [class.status--inativo]="!usuario.ativo">
+            {{ usuario.ativo ? 'Ativo' : 'Inativo' }}
+          </span>
+          <div class="linha__acoes">
+            <button type="button" class="botao botao--texto" (click)="solicitarEdicao(usuario)">Editar</button>
+            <button type="button" class="botao botao--texto-alerta" (click)="solicitarExclusao(usuario)">
+              Excluir
+            </button>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+
+  <footer class="paginacao">
+    <button
+      type="button"
+      class="botao botao--paginacao"
+      [disabled]="paginaAtual() === 1"
+      (click)="irParaPagina(paginaAtual() - 1)"
+    >
+      Anterior
+    </button>
+
+    <span>Página {{ paginaAtual() }} de {{ totalPaginas() }}</span>
+
+    <button
+      type="button"
+      class="botao botao--paginacao"
+      [disabled]="paginaAtual() === totalPaginas()"
+      (click)="irParaPagina(paginaAtual() + 1)"
+    >
+      Próxima
+    </button>
+  </footer>
+}

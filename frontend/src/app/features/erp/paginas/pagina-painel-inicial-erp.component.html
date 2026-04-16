@@ -9,59 +9,8 @@
   </section>
 } @else if (painel(); as dados) {
   <section class="painel">
-    <header class="hero">
-      <div>
-        <p class="hero__legenda">Visão geral</p>
-        <h2>{{ dados.saudacao }}</h2>
-        <p class="hero__texto">
-          Acompanhe os principais indicadores, os atalhos operacionais e a navegação principal do ERP.
-        </p>
-      </div>
-
-      <div class="hero__resumo">
-        @for (item of resumoExecutivo(); track item.rotulo) {
-          <article class="hero__item">
-            <span>{{ item.rotulo }}</span>
-            <strong>{{ item.valor }}</strong>
-          </article>
-        }
-      </div>
-    </header>
-
-    <section class="indicadores">
-      @for (indicador of dados.indicadores; track indicador.titulo) {
-        <article class="card">
-          <p>{{ indicador.titulo }}</p>
-          <strong>{{ indicador.valor }}</strong>
-          <span>{{ indicador.variacao }}</span>
-        </article>
-      }
-    </section>
-
-    <section class="grade">
-      <article class="bloco">
-        <h3>Menu principal</h3>
-        <ul class="lista">
-          @for (item of dados.menu_principal; track item.rota) {
-            <li>
-              <strong>{{ item.rotulo }}</strong>
-              <span>{{ item.rota }}</span>
-            </li>
-          }
-        </ul>
-      </article>
-
-      <article class="bloco">
-        <h3>Atalhos operacionais</h3>
-        <ul class="lista">
-          @for (atalho of dados.atalhos; track atalho.titulo) {
-            <li>
-              <strong>{{ atalho.titulo }}</strong>
-              <span>{{ atalho.descricao }}</span>
-            </li>
-          }
-        </ul>
-      </article>
-    </section>
+    <app-hero-painel [saudacao]="dados.saudacao" [resumo]="resumoExecutivo()" />
+    <app-indicadores-painel [indicadores]="dados.indicadores" />
+    <app-listas-contexto-painel [menuPrincipal]="dados.menu_principal" [atalhos]="dados.atalhos" />
   </section>
 }

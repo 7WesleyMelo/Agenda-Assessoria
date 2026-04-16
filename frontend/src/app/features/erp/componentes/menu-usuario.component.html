@@ -1,0 +1,28 @@
+<div class="menu-usuario">
+  <button type="button" class="menu-usuario__gatilho" (click)="alternarDropdown($event)">
+    <div class="menu-usuario__info">
+      <strong>{{ usuario()?.cargo }}</strong>
+      <span>{{ usuario()?.email }}</span>
+    </div>
+
+    <app-avatar-usuario [nome]="usuario()?.nome ?? null" />
+  </button>
+
+  @if (dropdownAberto()) {
+    <div class="menu-usuario__dropdown" (click)="$event.stopPropagation()">
+      <div class="menu-usuario__cabecalho">
+        <app-avatar-usuario [nome]="usuario()?.nome ?? null" [grande]="true" />
+
+        <div>
+          <strong>{{ usuario()?.nome }}</strong>
+          <span>{{ usuario()?.cargo }}</span>
+        </div>
+      </div>
+
+      <button type="button" class="menu-usuario__acao" (click)="abrirPerfil($event)">Perfil</button>
+      <button type="button" class="menu-usuario__acao menu-usuario__acao--sair" (click)="solicitarSaida()">
+        Sair
+      </button>
+    </div>
+  }
+</div>

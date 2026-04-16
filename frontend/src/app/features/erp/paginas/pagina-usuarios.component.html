@@ -1,193 +1,40 @@
 <section class="usuarios">
-  <header class="cabecalho">
-    <div>
-      <p class="cabecalho__legenda">Cadastro de usuários</p>
-      <h2>Controle de acesso ao ERP</h2>
-      <p class="cabecalho__descricao">
-        Cadastre, edite e gerencie os usuários internos do sistema. A API bloqueia a exclusão do
-        próprio usuário autenticado.
-      </p>
-    </div>
-
-    <button type="button" class="botao botao--secundario" (click)="iniciarCadastro()">
-      Novo usuário
-    </button>
-  </header>
-
   @if (mensagemErro()) {
     <p class="mensagem-erro">{{ mensagemErro() }}</p>
   }
 
-  <article class="painel-lista">
-    <div class="painel-lista__topo">
-      <div>
-        <h3>Usuários cadastrados</h3>
-        <span>{{ usuariosFiltrados().length }} registros encontrados</span>
-      </div>
+  <app-cabecalho-usuarios
+    [totalRegistros]="usuariosFiltrados().length"
+    [termoBusca]="termoBusca()"
+    (novoUsuario)="iniciarCadastro()"
+    (buscaAlterada)="atualizarBusca($event)"
+  >
+    <app-tabela-usuarios
+      [carregando]="carregando()"
+      [usuarios]="usuariosPaginados()"
+      [paginaAtual]="paginaAtual()"
+      [totalPaginas]="totalPaginas()"
+      (editar)="editar($event)"
+      (excluir)="solicitarExclusao($event)"
+      (paginaAlterada)="irParaPagina($event)"
+    />
+  </app-cabecalho-usuarios>
 
-      <label class="campo-busca">
-        <span>Buscar</span>
-        <input
-          type="search"
-          [value]="termoBusca()"
-          (input)="atualizarBusca($event)"
-          placeholder="Nome, e-mail ou cargo"
-        />
-      </label>
-    </div>
+  <app-drawer-usuario-formulario
+    [aberto]="formularioAberto()"
+    [emEdicao]="!!usuarioEmEdicao()"
+    [salvando]="salvando()"
+    [formulario]="formulario"
+    [cargosDisponiveis]="cargosDisponiveis"
+    (fechar)="fecharFormulario()"
+    (salvar)="salvar()"
+  />
 
-    @if (carregando()) {
-      <p class="estado">Carregando usuários...</p>
-    } @else if (usuariosFiltrados().length === 0) {
-      <p class="estado">Nenhum usuário encontrado com o filtro informado.</p>
-    } @else {
-      <div class="tabela-wrapper">
-        <div class="tabela-cabecalho">
-          <span>Nome</span>
-          <span>E-mail</span>
-          <span>Cargo</span>
-          <span>Status</span>
-          <span class="tabela-cabecalho__acoes">Ações</span>
-        </div>
-
-        <div class="tabela-corpo">
-          @for (usuario of usuariosPaginados(); track usuario.id) {
-            <article class="linha">
-              <div class="linha__identidade">
-                <span class="linha__avatar">{{ usuario.nome.slice(0, 2).toUpperCase() }}</span>
-                <span class="linha__principal">{{ usuario.nome }}</span>
-              </div>
-              <span>{{ usuario.email }}</span>
-              <span>{{ usuario.cargo }}</span>
-              <span class="status" [class.status--inativo]="!usuario.ativo">
-                {{ usuario.ativo ? 'Ativo' : 'Inativo' }}
-              </span>
-              <div class="linha__acoes">
-                <button type="button" class="botao botao--texto" (click)="editar(usuario)">Editar</button>
-                <button
-                  type="button"
-                  class="botao botao--texto-alerta"
-                  (click)="solicitarExclusao(usuario)"
-                >
-                  Excluir
-                </button>
-              </div>
-            </article>
-          }
-        </div>
-      </div>
-
-      <footer class="paginacao">
-        <button
-          type="button"
-          class="botao botao--paginacao"
-          [disabled]="paginaAtual() === 1"
-          (click)="irParaPagina(paginaAtual() - 1)"
-        >
-          Anterior
-        </button>
-
-        <span>Página {{ paginaAtual() }} de {{ totalPaginas() }}</span>
-
-        <button
-          type="button"
-          class="botao botao--paginacao"
-          [disabled]="paginaAtual() === totalPaginas()"
-          (click)="irParaPagina(paginaAtual() + 1)"
-        >
-          Próxima
-        </button>
-      </footer>
-    }
-  </article>
-
-  @if (formularioAberto()) {
-    <div class="drawer-backdrop" (click)="fecharFormulario()">
-      <aside class="drawer" (click)="$event.stopPropagation()">
-        <div class="drawer__topo">
-          <div>
-            <p class="drawer__legenda">Formulário lateral</p>
-            <h3>{{ usuarioEmEdicao() ? 'Editar usuário' : 'Novo usuário' }}</h3>
-          </div>
-
-          <button type="button" class="botao-fechar" (click)="fecharFormulario()">Fechar</button>
-        </div>
-
-        <form [formGroup]="formulario" (ngSubmit)="salvar()">
-          <label class="campo">
-            <span>Nome</span>
-            <input type="text" formControlName="nome" />
-          </label>
-
-          <label class="campo">
-            <span>E-mail</span>
-            <input type="email" formControlName="email" />
-          </label>
-
-          <label class="campo">
-            <span>Cargo</span>
-            <select formControlName="cargo">
-              @for (cargo of cargosDisponiveis; track cargo) {
-                <option [value]="cargo">{{ cargo }}</option>
-              }
-            </select>
-          </label>
-
-          <label class="campo campo--checkbox">
-            <input type="checkbox" formControlName="ativo" />
-            <span>Usuário ativo</span>
-          </label>
-
-          <label class="campo">
-            <span>{{ usuarioEmEdicao() ? 'Nova senha' : 'Senha inicial' }}</span>
-            <input
-              type="password"
-              formControlName="password"
-              [placeholder]="usuarioEmEdicao() ? 'Preencha apenas se quiser alterar' : 'Mínimo de 6 caracteres'"
-            />
-          </label>
-
-          <div class="drawer__acoes">
-            <button type="button" class="botao botao--secundario" (click)="fecharFormulario()">
-              Cancelar
-            </button>
-            <button type="submit" class="botao botao--primario" [disabled]="salvando()">
-              {{ salvando() ? 'Salvando...' : usuarioEmEdicao() ? 'Salvar alterações' : 'Cadastrar usuário' }}
-            </button>
-          </div>
-        </form>
-      </aside>
-    </div>
-  }
-
-  @if (usuarioPendenteExclusao(); as usuario) {
-    <div class="modal-backdrop" (click)="cancelarExclusao()">
-      <section class="modal" (click)="$event.stopPropagation()">
-        <p class="modal__legenda">Confirmação de exclusão</p>
-        <h3>Excluir {{ usuario.nome }}?</h3>
-        <p>
-          Esta ação remove o usuário do cadastro. Se ele for o usuário autenticado, a API vai
-          bloquear a exclusão automaticamente.
-        </p>
-
-        @if (mensagemErroExclusao()) {
-          <p class="mensagem-erro">{{ mensagemErroExclusao() }}</p>
-        }
-
-        <div class="modal__acoes">
-          <button type="button" class="botao botao--secundario" (click)="cancelarExclusao()">
-            Cancelar
-          </button>
-          <button
-            type="button"
-            class="botao botao--perigo"
-            [disabled]="excluindo()"
-            (click)="confirmarExclusao()"
-          >
-            {{ excluindo() ? 'Excluindo...' : 'Confirmar exclusão' }}
-          </button>
-        </div>
-      </section>
-    </div>
-  }
+  <app-modal-exclusao-usuario
+    [usuario]="usuarioPendenteExclusao()"
+    [excluindo]="excluindo()"
+    [mensagemErro]="mensagemErroExclusao()"
+    (cancelar)="cancelarExclusao()"
+    (confirmar)="confirmarExclusao()"
+  />
 </section>

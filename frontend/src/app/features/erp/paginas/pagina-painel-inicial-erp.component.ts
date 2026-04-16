@@ -1,11 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { PainelInicial } from '../../../core/modelos/painel-inicial.model';
+import { HeroPainelComponent } from '../componentes/hero-painel.component';
+import { IndicadoresPainelComponent } from '../componentes/indicadores-painel.component';
+import { ListasContextoPainelComponent } from '../componentes/listas-contexto-painel.component';
 import { PainelInicialApiService } from '../servicos/painel-inicial-api.service';
 
 @Component({
   selector: 'app-pagina-painel-inicial-erp',
   standalone: true,
+  imports: [HeroPainelComponent, IndicadoresPainelComponent, ListasContextoPainelComponent],
   templateUrl: './pagina-painel-inicial-erp.component.html',
   styleUrl: './pagina-painel-inicial-erp.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

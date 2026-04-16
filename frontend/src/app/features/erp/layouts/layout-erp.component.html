@@ -1,34 +1,5 @@
 <div class="layout-erp">
-  <aside class="barra-lateral">
-    <div class="marca">
-      <p class="marca__rotulo">Agenda</p>
-      <strong>ERP Assessoria</strong>
-      <span class="marca__descricao">Gestão operacional com foco em clareza, agilidade e controle.</span>
-    </div>
-
-    <nav class="menu">
-      <a routerLink="/erp" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">
-        <span class="menu__icone menu__icone--painel"></span>
-        <span>Painel inicial</span>
-      </a>
-      <a routerLink="/erp/cadastros" routerLinkActive="ativo">
-        <span class="menu__icone menu__icone--cadastros"></span>
-        <span>Cadastros</span>
-      </a>
-      <a routerLink="/erp/financeiro" routerLinkActive="ativo">
-        <span class="menu__icone menu__icone--financeiro"></span>
-        <span>Financeiro</span>
-      </a>
-      <a routerLink="/erp/relatorios" routerLinkActive="ativo">
-        <span class="menu__icone menu__icone--relatorios"></span>
-        <span>Relatórios</span>
-      </a>
-      <a routerLink="/erp/configuracoes" routerLinkActive="ativo">
-        <span class="menu__icone menu__icone--configuracoes"></span>
-        <span>Configurações</span>
-      </a>
-    </nav>
-  </aside>
+  <app-barra-lateral-erp />
 
   <div class="conteudo">
     <header class="topo">
@@ -37,44 +8,7 @@
         <h1>{{ sessaoService.usuario()?.nome }}</h1>
       </div>
 
-      <div class="menu-usuario">
-        <button type="button" class="menu-usuario__gatilho" (click)="alternarDropdown($event)">
-          <div class="menu-usuario__info">
-            <strong>{{ sessaoService.usuario()?.cargo }}</strong>
-            <span>{{ sessaoService.usuario()?.email }}</span>
-          </div>
-
-          <img
-            class="menu-usuario__avatar"
-            [src]="avatarUsuario()"
-            [alt]="'Foto do usuário ' + (sessaoService.usuario()?.nome ?? '')"
-          />
-        </button>
-
-        @if (dropdownAberto()) {
-          <div class="menu-usuario__dropdown" (click)="$event.stopPropagation()">
-            <div class="menu-usuario__cabecalho">
-              <img
-                class="menu-usuario__avatar menu-usuario__avatar--grande"
-                [src]="avatarUsuario()"
-                [alt]="'Foto do usuário ' + (sessaoService.usuario()?.nome ?? '')"
-              />
-
-              <div>
-                <strong>{{ sessaoService.usuario()?.nome }}</strong>
-                <span>{{ sessaoService.usuario()?.cargo }}</span>
-              </div>
-            </div>
-
-            <button type="button" class="menu-usuario__acao" (click)="abrirPerfil($event)">
-              Perfil
-            </button>
-            <button type="button" class="menu-usuario__acao menu-usuario__acao--sair" (click)="sair()">
-              Sair
-            </button>
-          </div>
-        }
-      </div>
+      <app-menu-usuario (perfil)="abrirPerfil()" (sair)="sair()" />
     </header>
 
     <main class="conteudo__principal">

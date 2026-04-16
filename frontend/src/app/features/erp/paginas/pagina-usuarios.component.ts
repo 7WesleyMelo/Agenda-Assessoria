@@ -1,15 +1,23 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SessaoService } from '../../../core/autenticacao/estado/sessao.service';
+import { FormBuilder, Validators } from '@angular/forms';
 import { cargosUsuario } from '../../../core/modelos/cargo-usuario.model';
 import { Usuario } from '../../../core/modelos/usuario.model';
-import { PayloadSalvarUsuario, UsuariosApiService } from '../servicos/usuarios-api.service';
+import { CabecalhoUsuariosComponent } from '../componentes/cabecalho-usuarios.component';
+import { DrawerUsuarioFormularioComponent } from '../componentes/drawer-usuario-formulario.component';
+import { ModalExclusaoUsuarioComponent } from '../componentes/modal-exclusao-usuario.component';
+import { TabelaUsuariosComponent } from '../componentes/tabela-usuarios.component';
+import { UsuariosFacade } from '../servicos/usuarios.facade';
 
 @Component({
   selector: 'app-pagina-usuarios',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [
+    CabecalhoUsuariosComponent,
+    TabelaUsuariosComponent,
+    DrawerUsuarioFormularioComponent,
+    ModalExclusaoUsuarioComponent,
+  ],
+  providers: [UsuariosFacade],
   templateUrl: './pagina-usuarios.component.html',
   styleUrl: './pagina-usuarios.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,15 +26,14 @@ export class PaginaUsuariosComponent implements OnInit {
   private static readonly ITENS_POR_PAGINA = 6;
 
   private readonly formBuilder = inject(FormBuilder);
-  private readonly usuariosApiService = inject(UsuariosApiService);
-  private readonly sessaoService = inject(SessaoService);
+  private readonly usuariosFacade = inject(UsuariosFacade);
 
-  protected readonly carregando = signal(true);
-  protected readonly salvando = signal(false);
-  protected readonly excluindo = signal(false);
-  protected readonly usuarios = signal<Usuario[]>([]);
-  protected readonly mensagemErro = signal<string | null>(null);
-  protected readonly mensagemErroExclusao = signal<string | null>(null);
+  protected readonly carregando = this.usuariosFacade.carregando;
+  protected readonly salvando = this.usuariosFacade.salvando;
+  protected readonly excluindo = this.usuariosFacade.excluindo;
+  protected readonly usuarios = this.usuariosFacade.usuarios;
+  protected readonly mensagemErro = this.usuariosFacade.mensagemErro;
+  protected readonly mensagemErroExclusao = this.usuariosFacade.mensagemErroExclusao;
   protected readonly usuarioEmEdicao = signal<Usuario | null>(null);
   protected readonly termoBusca = signal('');
   protected readonly paginaAtual = signal(1);
@@ -77,20 +84,8 @@ export class PaginaUsuariosComponent implements OnInit {
   }
 
   protected carregarUsuarios(): void {
-    this.carregando.set(true);
-    this.mensagemErro.set(null);
-
-    this.usuariosApiService.listar().subscribe({
-      next: (usuarios) => {
-        this.usuarios.set(usuarios);
-        this.paginaAtual.set(1);
-        this.carregando.set(false);
-      },
-      error: (erro: HttpErrorResponse) => {
-        this.mensagemErro.set(erro.error?.message ?? 'Não foi possível carregar os usuários.');
-        this.carregando.set(false);
-      },
-    });
+    this.usuariosFacade.carregar();
+    this.paginaAtual.set(1);
   }
 
   protected iniciarCadastro(): void {
@@ -103,7 +98,7 @@ export class PaginaUsuariosComponent implements OnInit {
       ativo: true,
       password: '',
     });
-    this.mensagemErro.set(null);
+    this.usuariosFacade.limparErroPrincipal();
   }
 
   protected editar(usuario: Usuario): void {
@@ -116,7 +111,7 @@ export class PaginaUsuariosComponent implements OnInit {
       ativo: usuario.ativo,
       password: '',
     });
-    this.mensagemErro.set(null);
+    this.usuariosFacade.limparErroPrincipal();
   }
 
   protected salvar(): void {
@@ -125,40 +120,16 @@ export class PaginaUsuariosComponent implements OnInit {
       return;
     }
 
-    this.salvando.set(true);
-    this.mensagemErro.set(null);
-
     const payload = this.montarPayload();
     const usuarioEdicao = this.usuarioEmEdicao();
-
-    const requisicao = usuarioEdicao
-      ? this.usuariosApiService.atualizar(usuarioEdicao.id, payload)
-      : this.usuariosApiService.criar(payload);
-
-    requisicao.subscribe({
-      next: (usuario) => {
-        if (this.sessaoService.usuario()?.id === usuario.id) {
-          this.sessaoService.definirUsuario(usuario);
-        }
-
-        this.salvando.set(false);
-        this.fecharFormulario();
-        this.carregarUsuarios();
-      },
-      error: (erro: HttpErrorResponse) => {
-        this.salvando.set(false);
-        this.mensagemErro.set(
-          erro.error?.message ??
-            erro.error?.errors?.usuario?.[0] ??
-            'Não foi possível salvar o usuário.'
-        );
-      },
+    this.usuariosFacade.salvar(usuarioEdicao?.id ?? null, payload, true, () => {
+      this.fecharFormulario();
     });
   }
 
   protected solicitarExclusao(usuario: Usuario): void {
     this.usuarioPendenteExclusao.set(usuario);
-    this.mensagemErroExclusao.set(null);
+    this.usuariosFacade.limparErroExclusao();
   }
 
   protected confirmarExclusao(): void {
@@ -168,35 +139,12 @@ export class PaginaUsuariosComponent implements OnInit {
       return;
     }
 
-    this.excluindo.set(true);
-    this.mensagemErroExclusao.set(null);
-
-    this.usuariosApiService.excluir(usuario.id).subscribe({
-      next: () => {
-        this.excluindo.set(false);
-        this.usuarioPendenteExclusao.set(null);
-        this.mensagemErroExclusao.set(null);
-        this.carregarUsuarios();
-      },
-      error: (erro: HttpErrorResponse) => {
-        this.excluindo.set(false);
-        this.mensagemErroExclusao.set(
-          erro.error?.message ??
-            erro.error?.errors?.usuario?.[0] ??
-            'Não foi possível excluir o usuário.'
-        );
-      },
-    });
+    this.usuariosFacade.excluir(usuario.id);
   }
 
   protected cancelarExclusao(): void {
     this.usuarioPendenteExclusao.set(null);
-    this.mensagemErroExclusao.set(null);
-    this.excluindo.set(false);
-  }
-
-  protected cancelarEdicao(): void {
-    this.fecharFormulario();
+    this.usuariosFacade.limparErroExclusao();
   }
 
   protected fecharFormulario(): void {
@@ -209,11 +157,10 @@ export class PaginaUsuariosComponent implements OnInit {
       ativo: true,
       password: '',
     });
-    this.mensagemErro.set(null);
+    this.usuariosFacade.limparErroPrincipal();
   }
 
-  protected atualizarBusca(event: Event): void {
-    const valor = (event.target as HTMLInputElement).value;
+  protected atualizarBusca(valor: string): void {
     this.termoBusca.set(valor);
     this.paginaAtual.set(1);
   }
@@ -226,7 +173,7 @@ export class PaginaUsuariosComponent implements OnInit {
     this.paginaAtual.set(pagina);
   }
 
-  private montarPayload(): PayloadSalvarUsuario {
+  private montarPayload() {
     const valor = this.formulario.getRawValue();
     const usuarioEdicao = this.usuarioEmEdicao();
 

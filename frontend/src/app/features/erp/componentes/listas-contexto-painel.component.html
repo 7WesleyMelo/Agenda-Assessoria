@@ -1,0 +1,25 @@
+<section class="grade">
+  <article class="bloco">
+    <h3>Menu principal</h3>
+    <ul class="lista">
+      @for (item of menuPrincipal(); track item.rota) {
+        <li>
+          <strong>{{ item.rotulo }}</strong>
+          <span>{{ item.rota }}</span>
+        </li>
+      }
+    </ul>
+  </article>
+
+  <article class="bloco">
+    <h3>Atalhos operacionais</h3>
+    <ul class="lista">
+      @for (atalho of atalhos(); track atalho.titulo) {
+        <li>
+          <strong>{{ atalho.titulo }}</strong>
+          <span>{{ atalho.descricao }}</span>
+        </li>
+      }
+    </ul>
+  </article>
+</section>

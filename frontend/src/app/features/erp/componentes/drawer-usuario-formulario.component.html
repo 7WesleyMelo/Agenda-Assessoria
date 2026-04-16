@@ -1,0 +1,55 @@
+@if (aberto()) {
+  <div class="drawer-backdrop" (click)="fecharDrawer()">
+    <aside class="drawer" (click)="$event.stopPropagation()">
+      <div class="drawer__topo">
+        <div>
+          <h3>{{ emEdicao() ? 'Editar usuário' : 'Novo usuário' }}</h3>
+        </div>
+
+        <button type="button" class="botao botao--secundario" (click)="fecharDrawer()">Fechar</button>
+      </div>
+
+      <form [formGroup]="formulario()" (ngSubmit)="submeterFormulario()">
+        <label class="campo">
+          <span>Nome</span>
+          <input type="text" formControlName="nome" />
+        </label>
+
+        <label class="campo">
+          <span>E-mail</span>
+          <input type="email" formControlName="email" />
+        </label>
+
+        <label class="campo">
+          <span>Cargo</span>
+          <select formControlName="cargo">
+            @for (cargo of cargosDisponiveis(); track cargo) {
+              <option [value]="cargo">{{ cargo }}</option>
+            }
+          </select>
+        </label>
+
+        <label class="campo campo--checkbox">
+          <input type="checkbox" formControlName="ativo" />
+          <span>Usuário ativo</span>
+        </label>
+
+        <label class="campo">
+          <span>{{ emEdicao() ? 'Nova senha' : 'Senha inicial' }}</span>
+          <input
+            type="password"
+            formControlName="password"
+            [placeholder]="emEdicao() ? 'Preencha apenas se quiser alterar' : 'Mínimo de 6 caracteres'"
+          />
+        </label>
+
+        <div class="drawer__acoes">
+          <button type="button" class="botao botao--secundario" (click)="fecharDrawer()">Cancelar</button>
+          <button type="submit" class="botao botao--primario" [disabled]="salvando()">
+            {{ salvando() ? 'Salvando...' : emEdicao() ? 'Salvar alterações' : 'Cadastrar usuário' }}
+          </button>
+        </div>
+      </form>
+    </aside>
+  </div>
+}

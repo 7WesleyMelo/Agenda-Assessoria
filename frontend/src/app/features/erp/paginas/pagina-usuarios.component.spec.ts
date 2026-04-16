@@ -1,15 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
-import { SessaoService } from '../../../core/autenticacao/estado/sessao.service';
 import { Usuario } from '../../../core/modelos/usuario.model';
-import { UsuariosApiService } from '../servicos/usuarios-api.service';
+import { UsuariosFacade } from '../servicos/usuarios.facade';
 import { PaginaUsuariosComponent } from './pagina-usuarios.component';
 
 describe('PaginaUsuariosComponent', () => {
   let fixture: ComponentFixture<PaginaUsuariosComponent>;
-  let usuariosApiService: jasmine.SpyObj<UsuariosApiService>;
+  let usuariosFacade: jasmine.SpyObj<UsuariosFacade>;
+  let mensagemErroExclusaoSignal = signal<string | null>(null);
 
   const usuarioAutenticado: Usuario = {
     id: 1,
@@ -31,26 +29,32 @@ describe('PaginaUsuariosComponent', () => {
   ];
 
   beforeEach(async () => {
-    usuariosApiService = jasmine.createSpyObj<UsuariosApiService>('UsuariosApiService', [
-      'listar',
-      'criar',
-      'atualizar',
+    usuariosFacade = jasmine.createSpyObj<UsuariosFacade>('UsuariosFacade', [
+      'carregar',
+      'salvar',
       'excluir',
+      'limparErroPrincipal',
+      'limparErroExclusao',
     ]);
-    usuariosApiService.listar.and.returnValue(of(usuarios));
+    mensagemErroExclusaoSignal = signal<string | null>(null);
+    Object.defineProperties(usuariosFacade, {
+      usuarios: { value: signal(usuarios) },
+      carregando: { value: signal(false) },
+      salvando: { value: signal(false) },
+      excluindo: { value: signal(false) },
+      mensagemErro: { value: signal<string | null>(null) },
+      mensagemErroExclusao: { value: mensagemErroExclusaoSignal },
+    });
+
+    TestBed.overrideComponent(PaginaUsuariosComponent, {
+      set: {
+        providers: [{ provide: UsuariosFacade, useValue: usuariosFacade }],
+      },
+    });
 
     await TestBed.configureTestingModule({
       imports: [PaginaUsuariosComponent],
-      providers: [
-        { provide: UsuariosApiService, useValue: usuariosApiService },
-        {
-          provide: SessaoService,
-          useValue: {
-            usuario: signal(usuarioAutenticado),
-            definirUsuario: jasmine.createSpy('definirUsuario'),
-          },
-        },
-      ],
+      providers: [{ provide: UsuariosFacade, useValue: usuariosFacade }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PaginaUsuariosComponent);
@@ -61,7 +65,7 @@ describe('PaginaUsuariosComponent', () => {
     const linhas = fixture.nativeElement.querySelectorAll('.linha');
     const conteudo = fixture.nativeElement.textContent;
 
-    expect(usuariosApiService.listar).toHaveBeenCalled();
+    expect(usuariosFacade.carregar).toHaveBeenCalled();
     expect(linhas.length).toBe(2);
     expect(conteudo).toContain('Administrador ERP');
     expect(conteudo).toContain('Maria Operadora');
@@ -83,19 +87,7 @@ describe('PaginaUsuariosComponent', () => {
   });
 
   it('mantém o modal aberto e exibe a mensagem da API quando a exclusão falha', () => {
-    usuariosApiService.excluir.and.returnValue(
-      throwError(
-        () =>
-          new HttpErrorResponse({
-            status: 422,
-            error: {
-              errors: {
-                usuario: ['Não é permitido excluir o usuário autenticado.'],
-              },
-            },
-          })
-      )
-    );
+    mensagemErroExclusaoSignal.set('Não é permitido excluir o usuário autenticado.');
 
     const botoesExcluir = Array.from(
       fixture.nativeElement.querySelectorAll('.botao--texto-alerta')
@@ -116,7 +108,7 @@ describe('PaginaUsuariosComponent', () => {
 
     const modal = fixture.nativeElement.querySelector('.modal');
 
-    expect(usuariosApiService.excluir).toHaveBeenCalledWith(1);
+    expect(usuariosFacade.excluir).toHaveBeenCalledWith(1);
     expect(modal).not.toBeNull();
     expect(modal.textContent).toContain('Não é permitido excluir o usuário autenticado.');
   });

@@ -1,0 +1,35 @@
+<header class="cabecalho">
+  <div>
+    <p class="cabecalho__legenda">Cadastro de usuários</p>
+    <h2>Controle de acesso ao ERP</h2>
+    <p class="cabecalho__descricao">
+      Cadastre, edite e gerencie os usuários internos do sistema. A API bloqueia a exclusão do próprio
+      usuário autenticado.
+    </p>
+  </div>
+
+  <button type="button" class="botao botao--secundario" (click)="emitirNovoUsuario()">
+    Novo usuário
+  </button>
+</header>
+
+<article class="painel-lista">
+  <div class="painel-lista__topo">
+    <div>
+      <h3>Usuários cadastrados</h3>
+      <span>{{ totalRegistros() }} registros encontrados</span>
+    </div>
+
+    <label class="campo-busca">
+      <span>Buscar</span>
+      <input
+        type="search"
+        [value]="termoBusca()"
+        (input)="atualizarBusca($event)"
+        placeholder="Nome, e-mail ou cargo"
+      />
+    </label>
+  </div>
+
+  <ng-content />
+</article>
