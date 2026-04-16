@@ -7,8 +7,22 @@ if [ ! -f artisan ]; then
   exec tail -f /dev/null
 fi
 
-if [ -f composer.json ]; then
-  composer install --no-interaction
+checksum_atual() {
+  cksum composer.lock | awk '{ print $1 ":" $2 }'
+}
+
+instalar_dependencias() {
+  echo "Instalando dependencias do backend..."
+  composer install --no-interaction --prefer-dist
+  checksum_atual > vendor/.composer-lock.checksum
+}
+
+if [ -f composer.json ] && [ -f composer.lock ]; then
+  if [ ! -d vendor ] || [ ! -f vendor/.composer-lock.checksum ]; then
+    instalar_dependencias
+  elif [ "$(cat vendor/.composer-lock.checksum)" != "$(checksum_atual)" ]; then
+    instalar_dependencias
+  fi
 fi
 
 if [ -f .env.example ] && [ ! -f .env ]; then
@@ -18,6 +32,10 @@ fi
 if php artisan --version >/dev/null 2>&1; then
   if ! grep -q "^APP_KEY=base64:" .env 2>/dev/null; then
     php artisan key:generate --force || true
+  fi
+
+  if ! grep -q "^JWT_SECRET=.\+" .env 2>/dev/null; then
+    printf '\nJWT_SECRET=%s\n' "$(php -r "echo bin2hex(random_bytes(32));")" >> .env
   fi
 
   php artisan migrate --force || true

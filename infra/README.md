@@ -44,6 +44,13 @@ Ja foram adicionados:
 3. Inicializar Laravel em `backend/` e Angular em `frontend/`.
 4. Reiniciar os servicos apos o bootstrap das aplicacoes.
 
+## Otimizacoes de Subida
+
+- O backend usa volume dedicado para `vendor` e cache do Composer.
+- O frontend usa volume dedicado para `node_modules`, cache do npm e cache do Angular.
+- As dependencias so sao reinstaladas quando `composer.lock` ou `package-lock.json` mudarem.
+- Isso reduz significativamente o tempo de subida depois da primeira inicializacao da stack.
+
 ## Observacao
 
 Enquanto `backend/` e `frontend/` ainda nao tiverem suas aplicacoes criadas, os containers `api` e `web` permanecem ativos em modo de espera. Isso permite estabilizar a infraestrutura antes do bootstrap completo da stack.

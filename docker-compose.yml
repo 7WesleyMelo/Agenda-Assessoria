@@ -7,12 +7,15 @@ services:
     working_dir: /aplicacao/backend
     volumes:
       - ./backend:/aplicacao/backend
+      - backend_vendor:/aplicacao/backend/vendor
+      - composer_cache:/tmp/composer-cache
     ports:
       - "${API_PORTA:-8000}:8000"
     environment:
       APP_AMBIENTE: "${APP_AMBIENTE:-local}"
       APP_DEBUG: "${APP_DEBUG:-true}"
       TZ: "${TZ:-America/Cuiaba}"
+      COMPOSER_CACHE_DIR: /tmp/composer-cache
       DB_CONNECTION: pgsql
       DB_HOST: db
       DB_PORT: 5432
@@ -39,12 +42,16 @@ services:
     working_dir: /aplicacao/frontend
     volumes:
       - ./frontend:/aplicacao/frontend
+      - frontend_node_modules:/aplicacao/frontend/node_modules
+      - frontend_angular_cache:/aplicacao/frontend/.angular
+      - npm_cache:/root/.npm
     ports:
       - "${WEB_PORTA:-4200}:4200"
     environment:
       TZ: "${TZ:-America/Cuiaba}"
       CHOKIDAR_USEPOLLING: "true"
       NG_CLI_ANALYTICS: "false"
+      NPM_CONFIG_CACHE: /root/.npm
     depends_on:
       api:
         condition: service_started
@@ -80,6 +87,11 @@ services:
 
 volumes:
   postgres_data:
+  backend_vendor:
+  composer_cache:
+  frontend_node_modules:
+  frontend_angular_cache:
+  npm_cache:
 
 networks:
   agenda:
