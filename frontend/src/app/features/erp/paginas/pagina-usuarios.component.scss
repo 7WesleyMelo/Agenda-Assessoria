@@ -98,7 +98,8 @@ form,
 }
 
 .campo-busca input,
-.campo input {
+.campo input,
+.campo select {
   border: 1px solid rgba(88, 69, 53, 0.16);
   border-radius: 16px;
   background: #fff;
@@ -163,7 +164,8 @@ form,
   font-weight: 700;
 }
 
-.campo input {
+.campo input,
+.campo select {
   min-height: 3.2rem;
   padding: 0 1rem;
 }

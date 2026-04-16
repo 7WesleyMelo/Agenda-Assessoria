@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api\V1\Usuarios;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Support\Usuarios\CargosUsuario;
 
 class SalvarUsuarioRequest extends FormRequest
 {
@@ -28,7 +29,7 @@ class SalvarUsuarioRequest extends FormRequest
                 'max:160',
                 Rule::unique('users', 'email')->ignore($usuarioId),
             ],
-            'cargo' => ['required', 'string', 'min:3', 'max:80'],
+            'cargo' => ['required', 'string', Rule::in(CargosUsuario::todos())],
             'ativo' => ['required', 'boolean'],
             'password' => [
                 Rule::requiredIf($usuarioId === null),

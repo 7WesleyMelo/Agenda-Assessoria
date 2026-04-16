@@ -116,7 +116,11 @@
 
         <label class="campo">
           <span>Cargo</span>
-          <input type="text" formControlName="cargo" />
+          <select formControlName="cargo">
+            @for (cargo of cargosDisponiveis; track cargo) {
+              <option [value]="cargo">{{ cargo }}</option>
+            }
+          </select>
         </label>
 
         <label class="campo campo--checkbox">

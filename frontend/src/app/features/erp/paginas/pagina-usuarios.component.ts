@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SessaoService } from '../../../core/autenticacao/estado/sessao.service';
+import { cargosUsuario } from '../../../core/modelos/cargo-usuario.model';
 import { Usuario } from '../../../core/modelos/usuario.model';
 import { PayloadSalvarUsuario, UsuariosApiService } from '../servicos/usuarios-api.service';
 
@@ -28,6 +29,7 @@ export class PaginaUsuariosComponent implements OnInit {
   protected readonly termoBusca = signal('');
   protected readonly paginaAtual = signal(1);
   protected readonly usuarioPendenteExclusao = signal<Usuario | null>(null);
+  protected readonly cargosDisponiveis = cargosUsuario;
 
   protected readonly usuariosFiltrados = computed(() => {
     const termo = this.termoBusca().trim().toLowerCase();
@@ -62,7 +64,7 @@ export class PaginaUsuariosComponent implements OnInit {
   protected readonly formulario = this.formBuilder.nonNullable.group({
     nome: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
-    cargo: ['', [Validators.required, Validators.minLength(3)]],
+    cargo: ['Administrador', [Validators.required]],
     ativo: [true, [Validators.required]],
     password: [''],
   });
@@ -93,7 +95,7 @@ export class PaginaUsuariosComponent implements OnInit {
     this.formulario.reset({
       nome: '',
       email: '',
-      cargo: '',
+      cargo: 'Administrador',
       ativo: true,
       password: '',
     });

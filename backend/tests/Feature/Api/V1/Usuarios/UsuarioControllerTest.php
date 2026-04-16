@@ -36,7 +36,7 @@ class UsuarioControllerTest extends TestCase
             ->postJson('/api/v1/usuarios', [
                 'nome' => 'Maria Operadora',
                 'email' => 'maria@agendaassessoria.com.br',
-                'cargo' => 'Operadora',
+                'cargo' => 'Operador',
                 'ativo' => true,
                 'password' => '123456',
             ]);
@@ -46,7 +46,7 @@ class UsuarioControllerTest extends TestCase
             ->assertJson([
                 'nome' => 'Maria Operadora',
                 'email' => 'maria@agendaassessoria.com.br',
-                'cargo' => 'Operadora',
+                'cargo' => 'Operador',
                 'ativo' => true,
             ]);
 
@@ -60,7 +60,7 @@ class UsuarioControllerTest extends TestCase
         [, $token] = $this->autenticarComoAdministrador();
         $usuario = User::factory()->create([
             'name' => 'Maria Operadora',
-            'cargo' => 'Operadora',
+            'cargo' => 'Operador',
             'ativo' => true,
         ]);
 
@@ -68,7 +68,7 @@ class UsuarioControllerTest extends TestCase
             ->putJson("/api/v1/usuarios/{$usuario->id}", [
                 'nome' => 'Maria Gestora',
                 'email' => $usuario->email,
-                'cargo' => 'Gestora',
+                'cargo' => 'Gestor',
                 'ativo' => false,
                 'password' => null,
             ]);
@@ -77,7 +77,7 @@ class UsuarioControllerTest extends TestCase
             ->assertOk()
             ->assertJson([
                 'nome' => 'Maria Gestora',
-                'cargo' => 'Gestora',
+                'cargo' => 'Gestor',
                 'ativo' => false,
             ]);
     }
