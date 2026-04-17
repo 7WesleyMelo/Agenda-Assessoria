@@ -28,7 +28,7 @@ describe('PaginaUsuariosComponent', () => {
     },
   ];
 
-  beforeEach(async () => {
+  async function criarComponente(usuariosState: Usuario[] = usuarios): Promise<void> {
     usuariosFacade = jasmine.createSpyObj<UsuariosFacade>('UsuariosFacade', [
       'carregar',
       'salvar',
@@ -38,7 +38,7 @@ describe('PaginaUsuariosComponent', () => {
     ]);
     mensagemErroExclusaoSignal = signal<string | null>(null);
     Object.defineProperties(usuariosFacade, {
-      usuarios: { value: signal(usuarios) },
+      usuarios: { value: signal(usuariosState) },
       carregando: { value: signal(false) },
       salvando: { value: signal(false) },
       excluindo: { value: signal(false) },
@@ -46,6 +46,7 @@ describe('PaginaUsuariosComponent', () => {
       mensagemErroExclusao: { value: mensagemErroExclusaoSignal },
     });
 
+    TestBed.resetTestingModule();
     TestBed.overrideComponent(PaginaUsuariosComponent, {
       set: {
         providers: [{ provide: UsuariosFacade, useValue: usuariosFacade }],
@@ -59,6 +60,10 @@ describe('PaginaUsuariosComponent', () => {
 
     fixture = TestBed.createComponent(PaginaUsuariosComponent);
     fixture.detectChanges();
+  }
+
+  beforeEach(async () => {
+    await criarComponente();
   });
 
   it('renderiza a listagem inicial de usuários', () => {
@@ -82,34 +87,48 @@ describe('PaginaUsuariosComponent', () => {
     botaoNovoUsuario.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.drawer')).not.toBeNull();
+    const drawer = fixture.nativeElement.querySelector('.ui-drawer') as HTMLElement;
+
+    expect(drawer).not.toBeNull();
+    expect(drawer.getAttribute('role')).toBe('dialog');
+    expect(drawer.getAttribute('aria-label')).toBe('Formulário de usuário');
     expect(fixture.nativeElement.textContent).toContain('Novo usuário');
   });
 
   it('mantém o modal aberto e exibe a mensagem da API quando a exclusão falha', () => {
-    mensagemErroExclusaoSignal.set('Não é permitido excluir o usuário autenticado.');
-
     const botoesExcluir = Array.from(
-      fixture.nativeElement.querySelectorAll('.botao--texto-alerta')
+      fixture.nativeElement.querySelectorAll('.ui-botao--texto-alerta')
     ) as HTMLButtonElement[];
 
     botoesExcluir[0].click();
     fixture.detectChanges();
 
     const botoesModal = Array.from(
-      fixture.nativeElement.querySelectorAll('.modal .botao')
+      fixture.nativeElement.querySelectorAll('.modal .ui-botao')
     ) as HTMLButtonElement[];
     const botaoConfirmar = botoesModal.find((botao: HTMLButtonElement) =>
       botao.textContent?.includes('Confirmar exclusão')
     ) as HTMLButtonElement;
 
+    mensagemErroExclusaoSignal.set('Não é permitido excluir o usuário autenticado.');
     botaoConfirmar.click();
     fixture.detectChanges();
 
-    const modal = fixture.nativeElement.querySelector('.modal');
+    const modal = fixture.nativeElement.querySelector('.ui-modal') as HTMLElement;
 
     expect(usuariosFacade.excluir).toHaveBeenCalledWith(1);
     expect(modal).not.toBeNull();
+    expect(modal.getAttribute('role')).toBe('dialog');
+    expect(modal.getAttribute('aria-label')).toBe('Confirmação de exclusão de usuário');
     expect(modal.textContent).toContain('Não é permitido excluir o usuário autenticado.');
+  });
+
+  it('exibe estado vazio quando não existem usuários para listar', async () => {
+    await criarComponente([]);
+
+    const estadoVazio = fixture.nativeElement.querySelector('app-ui-estado-vazio');
+
+    expect(estadoVazio).not.toBeNull();
+    expect(estadoVazio.textContent).toContain('Nenhum usuário encontrado');
   });
 });

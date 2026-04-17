@@ -1,0 +1,36 @@
+.ui-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(18, 39, 52, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+}
+
+.ui-drawer {
+  width: 100%;
+  max-width: 34rem;
+  height: 100%;
+  padding: 1.5rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 28px 0 0 28px;
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.95), rgba(249, 244, 236, 0.82));
+  box-shadow: var(--sombra-card);
+  backdrop-filter: blur(12px);
+  overflow-y: auto;
+  transition:
+    transform var(--transicao-lenta),
+    box-shadow var(--transicao-lenta),
+    border-color var(--transicao-padrao);
+}
+
+.ui-drawer:hover {
+  box-shadow: 0 30px 70px rgba(52, 37, 24, 0.16);
+}
+
+@media (max-width: 760px) {
+  .ui-drawer {
+    border-radius: 0;
+  }
+}

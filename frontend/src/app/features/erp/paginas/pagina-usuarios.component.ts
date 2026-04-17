@@ -7,6 +7,7 @@ import { DrawerUsuarioFormularioComponent } from '../componentes/drawer-usuario-
 import { ModalExclusaoUsuarioComponent } from '../componentes/modal-exclusao-usuario.component';
 import { TabelaUsuariosComponent } from '../componentes/tabela-usuarios.component';
 import { UsuariosFacade } from '../servicos/usuarios.facade';
+import { UiAlertaComponent } from '../../../shared/ui/alerta/ui-alerta.component';
 
 @Component({
   selector: 'app-pagina-usuarios',
@@ -16,6 +17,7 @@ import { UsuariosFacade } from '../servicos/usuarios.facade';
     TabelaUsuariosComponent,
     DrawerUsuarioFormularioComponent,
     ModalExclusaoUsuarioComponent,
+    UiAlertaComponent,
   ],
   providers: [UsuariosFacade],
   templateUrl: './pagina-usuarios.component.html',

@@ -1,9 +1,11 @@
 <section class="indicadores">
   @for (indicador of indicadores(); track indicador.titulo) {
-    <article class="card">
-      <p>{{ indicador.titulo }}</p>
-      <strong>{{ indicador.valor }}</strong>
-      <span>{{ indicador.variacao }}</span>
-    </article>
+    <app-ui-card>
+      <article class="card">
+        <p>{{ indicador.titulo }}</p>
+        <strong>{{ indicador.valor }}</strong>
+        <span>{{ indicador.variacao }}</span>
+      </article>
+    </app-ui-card>
   }
 </section>

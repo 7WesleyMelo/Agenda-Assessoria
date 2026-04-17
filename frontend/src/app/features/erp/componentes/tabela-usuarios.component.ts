@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { Usuario } from '../../../core/modelos/usuario.model';
+import { UiEstadoVazioComponent } from '../../../shared/ui/estado-vazio/ui-estado-vazio.component';
+import { UiBadgeComponent } from '../../../shared/ui/badge/ui-badge.component';
 
 @Component({
   selector: 'app-tabela-usuarios',
   standalone: true,
+  imports: [UiBadgeComponent, UiEstadoVazioComponent],
   templateUrl: './tabela-usuarios.component.html',
   styleUrl: './tabela-usuarios.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

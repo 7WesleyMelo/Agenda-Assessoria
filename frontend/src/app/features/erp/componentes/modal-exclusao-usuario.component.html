@@ -1,6 +1,6 @@
-@if (usuario(); as usuarioSelecionado) {
-  <div class="modal-backdrop" (click)="cancelarModal()">
-    <section class="modal" (click)="$event.stopPropagation()">
+<app-ui-modal [aberto]="!!usuario()" ariaLabel="Confirmação de exclusão de usuário" (fechar)="cancelarModal()">
+  @if (usuario(); as usuarioSelecionado) {
+    <section class="modal">
       <p class="modal__legenda">Confirmação de exclusão</p>
       <h3>Excluir {{ usuarioSelecionado.nome }}?</h3>
       <p>
@@ -13,11 +13,17 @@
       }
 
       <div class="modal__acoes">
-        <button type="button" class="botao botao--secundario" (click)="cancelarModal()">Cancelar</button>
-        <button type="button" class="botao botao--perigo" [disabled]="excluindo()" (click)="confirmarExclusao()">
+        <button type="button" class="ui-botao ui-botao--secundario" (click)="cancelarModal()">Cancelar</button>
+        <button
+          type="button"
+          class="ui-botao ui-botao--perigo"
+          [disabled]="excluindo()"
+          [attr.aria-busy]="excluindo()"
+          (click)="confirmarExclusao()"
+        >
           {{ excluindo() ? 'Excluindo...' : 'Confirmar exclusão' }}
         </button>
       </div>
     </section>
-  </div>
-}
+  }
+</app-ui-modal>

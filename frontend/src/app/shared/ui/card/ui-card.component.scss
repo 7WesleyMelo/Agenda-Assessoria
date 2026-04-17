@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.ui-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.95), rgba(249, 244, 236, 0.82));
+  box-shadow: var(--sombra-card);
+  backdrop-filter: blur(12px);
+  transition:
+    transform var(--transicao-padrao),
+    box-shadow var(--transicao-lenta),
+    border-color var(--transicao-padrao);
+}
+
+.ui-card:hover {
+  box-shadow: 0 30px 70px rgba(52, 37, 24, 0.16);
+}
+
+.ui-card--destaque::after {
+  content: '';
+  position: absolute;
+  inset: auto -1.5rem -2rem auto;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(186, 103, 49, 0.18), transparent 70%);
+  pointer-events: none;
+}

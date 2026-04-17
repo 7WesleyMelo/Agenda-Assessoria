@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { cargosUsuario, CargoUsuario } from '../../../core/modelos/cargo-usuario.model';
+import { UiCampoComponent } from '../../../shared/ui/campo/ui-campo.component';
+import { UiDrawerComponent } from '../../../shared/ui/drawer/ui-drawer.component';
 
 @Component({
   selector: 'app-drawer-usuario-formulario',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, UiDrawerComponent, UiCampoComponent],
   templateUrl: './drawer-usuario-formulario.component.html',
   styleUrl: './drawer-usuario-formulario.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

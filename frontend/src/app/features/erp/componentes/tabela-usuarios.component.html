@@ -1,7 +1,13 @@
 @if (carregando()) {
-  <p class="estado">Carregando usuários...</p>
+  <app-ui-estado-vazio
+    titulo="Carregando usuários"
+    descricao="A lista está sendo atualizada a partir da API. Aguarde alguns instantes."
+  />
 } @else if (!possuiUsuarios()) {
-  <p class="estado">Nenhum usuário encontrado com o filtro informado.</p>
+  <app-ui-estado-vazio
+    titulo="Nenhum usuário encontrado"
+    descricao="Refine o filtro informado ou cadastre um novo usuário para começar."
+  />
 } @else {
   <div class="tabela-wrapper">
     <div class="tabela-cabecalho">
@@ -21,12 +27,12 @@
           </div>
           <span>{{ usuario.email }}</span>
           <span>{{ usuario.cargo }}</span>
-          <span class="status" [class.status--inativo]="!usuario.ativo">
+          <app-ui-badge [tom]="usuario.ativo ? 'sucesso' : 'alerta'">
             {{ usuario.ativo ? 'Ativo' : 'Inativo' }}
-          </span>
+          </app-ui-badge>
           <div class="linha__acoes">
-            <button type="button" class="botao botao--texto" (click)="solicitarEdicao(usuario)">Editar</button>
-            <button type="button" class="botao botao--texto-alerta" (click)="solicitarExclusao(usuario)">
+            <button type="button" class="ui-botao ui-botao--texto" (click)="solicitarEdicao(usuario)">Editar</button>
+            <button type="button" class="ui-botao ui-botao--texto-alerta" (click)="solicitarExclusao(usuario)">
               Excluir
             </button>
           </div>
@@ -38,7 +44,7 @@
   <footer class="paginacao">
     <button
       type="button"
-      class="botao botao--paginacao"
+      class="ui-botao ui-botao--paginacao"
       [disabled]="paginaAtual() === 1"
       (click)="irParaPagina(paginaAtual() - 1)"
     >
@@ -49,7 +55,7 @@
 
     <button
       type="button"
-      class="botao botao--paginacao"
+      class="ui-botao ui-botao--paginacao"
       [disabled]="paginaAtual() === totalPaginas()"
       (click)="irParaPagina(paginaAtual() + 1)"
     >

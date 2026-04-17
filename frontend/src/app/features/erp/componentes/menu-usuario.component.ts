@@ -12,6 +12,7 @@ import { AvatarUsuarioComponent } from './avatar-usuario.component';
 })
 export class MenuUsuarioComponent {
   private readonly sessaoService = inject(SessaoService);
+  protected readonly menuId = 'menu-usuario-dropdown';
 
   readonly perfil = output<void>();
   readonly sair = output<void>();
@@ -37,6 +38,11 @@ export class MenuUsuarioComponent {
 
   @HostListener('document:click')
   protected fecharDropdown(): void {
+    this.dropdownAberto.set(false);
+  }
+
+  @HostListener('document:keydown.escape')
+  protected fecharDropdownAoPressionarEsc(): void {
     this.dropdownAberto.set(false);
   }
 }

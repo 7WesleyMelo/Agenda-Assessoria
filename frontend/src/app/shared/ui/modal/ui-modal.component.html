@@ -1,0 +1,14 @@
+@if (aberto()) {
+  <div class="ui-modal-backdrop" (click)="solicitarFechamento()">
+    <section
+      class="ui-modal"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="ariaLabel()"
+      tabindex="-1"
+      (click)="$event.stopPropagation()"
+    >
+      <ng-content />
+    </section>
+  </div>
+}

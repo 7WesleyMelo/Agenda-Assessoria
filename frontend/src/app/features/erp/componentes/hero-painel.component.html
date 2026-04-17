@@ -1,18 +1,20 @@
-<header class="hero">
-  <div>
-    <p class="hero__legenda">Visão geral</p>
-    <h2>{{ saudacao() }}</h2>
-    <p class="hero__texto">
-      Acompanhe os principais indicadores, os atalhos operacionais e a navegação principal do ERP.
-    </p>
-  </div>
+<app-ui-card tonalidade="destaque">
+  <header class="hero">
+    <div>
+      <p class="hero__legenda">Visão geral</p>
+      <h2>{{ saudacao() }}</h2>
+      <p class="hero__texto">
+        Acompanhe os principais indicadores, os atalhos operacionais e a navegação principal do ERP.
+      </p>
+    </div>
 
-  <div class="hero__resumo">
-    @for (item of resumo(); track item.rotulo) {
-      <article class="hero__item">
-        <span>{{ item.rotulo }}</span>
-        <strong>{{ item.valor }}</strong>
-      </article>
-    }
-  </div>
-</header>
+    <div class="hero__resumo">
+      @for (item of resumo(); track item.rotulo) {
+        <article class="hero__item">
+          <span>{{ item.rotulo }}</span>
+          <strong>{{ item.valor }}</strong>
+        </article>
+      }
+    </div>
+  </header>
+</app-ui-card>

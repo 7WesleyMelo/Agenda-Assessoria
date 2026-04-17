@@ -78,6 +78,10 @@ textarea {
   font: inherit;
 }
 
+button {
+  border: 0;
+}
+
 button,
 a,
 input,
@@ -127,6 +131,117 @@ a {
 ::selection {
   background: rgba(27, 106, 97, 0.18);
   color: var(--cor-texto);
+}
+
+.ui-botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--raio-md);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.ui-botao:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.ui-botao:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ui-botao--primario {
+  background: linear-gradient(135deg, var(--cor-primaria), #2b8b77);
+  color: #fff;
+  box-shadow: 0 16px 30px rgba(27, 106, 97, 0.18);
+}
+
+.ui-botao--primario:hover:not(:disabled) {
+  box-shadow: 0 22px 36px rgba(27, 106, 97, 0.24);
+}
+
+.ui-botao--secundario {
+  background: rgba(186, 103, 49, 0.1);
+  color: var(--cor-secundaria-escura);
+  box-shadow: 0 14px 28px rgba(186, 103, 49, 0.12);
+}
+
+.ui-botao--secundario:hover:not(:disabled) {
+  border-color: rgba(186, 103, 49, 0.16);
+  background: rgba(186, 103, 49, 0.14);
+  box-shadow: 0 18px 32px rgba(186, 103, 49, 0.16);
+}
+
+.ui-botao--perigo {
+  background: linear-gradient(135deg, #b44a2a, #d06c43);
+  color: #fff;
+  box-shadow: 0 16px 30px rgba(180, 74, 42, 0.18);
+}
+
+.ui-botao--perigo:hover:not(:disabled) {
+  box-shadow: 0 22px 36px rgba(180, 74, 42, 0.24);
+}
+
+.ui-botao--paginacao {
+  background: rgba(186, 103, 49, 0.1);
+  color: var(--cor-secundaria-escura);
+}
+
+.ui-botao--paginacao:hover:not(:disabled) {
+  border-color: rgba(186, 103, 49, 0.16);
+  background: rgba(186, 103, 49, 0.14);
+}
+
+.ui-botao--texto,
+.ui-botao--texto-alerta {
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.ui-botao--texto {
+  color: var(--cor-primaria);
+}
+
+.ui-botao--texto-alerta {
+  color: var(--cor-alerta);
+}
+
+.ui-botao--texto:hover:not(:disabled),
+.ui-botao--texto-alerta:hover:not(:disabled) {
+  transform: none;
+  text-decoration: underline;
+  text-underline-offset: 0.18rem;
+}
+
+.ui-botao--bloco {
+  width: 100%;
+}
+
+.ui-controle {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(94, 74, 56, 0.14);
+  border-radius: var(--raio-md);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--cor-texto);
+}
+
+.ui-controle:hover {
+  border-color: rgba(94, 74, 56, 0.22);
+}
+
+.ui-controle:focus {
+  border-color: rgba(27, 106, 97, 0.26);
 }
 
 @keyframes elevar-entrada {

@@ -1,0 +1,31 @@
+.ui-estado-vazio {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border: 1px dashed rgba(94, 74, 56, 0.18);
+  border-radius: var(--raio-lg);
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.ui-estado-vazio__icone {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(186, 103, 49, 0.28), transparent 40%),
+    linear-gradient(135deg, rgba(27, 106, 97, 0.14), rgba(186, 103, 49, 0.14));
+}
+
+.ui-estado-vazio h3,
+.ui-estado-vazio p {
+  margin: 0;
+}
+
+.ui-estado-vazio h3 {
+  font-size: 1.05rem;
+}
+
+.ui-estado-vazio p {
+  color: var(--cor-texto-suave);
+}

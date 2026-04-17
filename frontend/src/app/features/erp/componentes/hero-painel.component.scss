@@ -1,26 +1,9 @@
 .hero {
-  position: relative;
-  overflow: hidden;
   padding: 2rem;
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 24rem);
   gap: 1.25rem;
   align-items: end;
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-lg);
-  background: linear-gradient(180deg, rgba(255, 253, 249, 0.94), rgba(249, 244, 236, 0.78));
-  box-shadow: var(--sombra-card);
-  backdrop-filter: blur(12px);
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: auto -2rem -3rem auto;
-  width: 12rem;
-  height: 12rem;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(27, 106, 97, 0.16), transparent 68%);
 }
 
 .hero__legenda {

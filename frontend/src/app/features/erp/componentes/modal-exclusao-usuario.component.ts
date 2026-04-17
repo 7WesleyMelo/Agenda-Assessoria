@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Usuario } from '../../../core/modelos/usuario.model';
+import { UiModalComponent } from '../../../shared/ui/modal/ui-modal.component';
 
 @Component({
   selector: 'app-modal-exclusao-usuario',
   standalone: true,
+  imports: [UiModalComponent],
   templateUrl: './modal-exclusao-usuario.component.html',
   styleUrl: './modal-exclusao-usuario.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,7 @@
+<div
+  class="ui-alerta"
+  [class.ui-alerta--erro]="variante() === 'erro'"
+  [class.ui-alerta--sucesso]="variante() === 'sucesso'"
+>
+  <ng-content />
+</div>

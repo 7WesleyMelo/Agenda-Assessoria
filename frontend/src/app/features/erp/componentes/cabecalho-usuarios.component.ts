@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { UiCardComponent } from '../../../shared/ui/card/ui-card.component';
 
 @Component({
   selector: 'app-cabecalho-usuarios',
   standalone: true,
+  imports: [UiCardComponent],
   templateUrl: './cabecalho-usuarios.component.html',
   styleUrl: './cabecalho-usuarios.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

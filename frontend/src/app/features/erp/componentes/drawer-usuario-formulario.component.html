@@ -1,55 +1,49 @@
-@if (aberto()) {
-  <div class="drawer-backdrop" (click)="fecharDrawer()">
-    <aside class="drawer" (click)="$event.stopPropagation()">
-      <div class="drawer__topo">
-        <div>
-          <h3>{{ emEdicao() ? 'Editar usuário' : 'Novo usuário' }}</h3>
-        </div>
+<app-ui-drawer [aberto]="aberto()" ariaLabel="Formulário de usuário" (fechar)="fecharDrawer()">
+  <div class="drawer__topo">
+    <div>
+      <h3>{{ emEdicao() ? 'Editar usuário' : 'Novo usuário' }}</h3>
+    </div>
 
-        <button type="button" class="botao botao--secundario" (click)="fecharDrawer()">Fechar</button>
-      </div>
-
-      <form [formGroup]="formulario()" (ngSubmit)="submeterFormulario()">
-        <label class="campo">
-          <span>Nome</span>
-          <input type="text" formControlName="nome" />
-        </label>
-
-        <label class="campo">
-          <span>E-mail</span>
-          <input type="email" formControlName="email" />
-        </label>
-
-        <label class="campo">
-          <span>Cargo</span>
-          <select formControlName="cargo">
-            @for (cargo of cargosDisponiveis(); track cargo) {
-              <option [value]="cargo">{{ cargo }}</option>
-            }
-          </select>
-        </label>
-
-        <label class="campo campo--checkbox">
-          <input type="checkbox" formControlName="ativo" />
-          <span>Usuário ativo</span>
-        </label>
-
-        <label class="campo">
-          <span>{{ emEdicao() ? 'Nova senha' : 'Senha inicial' }}</span>
-          <input
-            type="password"
-            formControlName="password"
-            [placeholder]="emEdicao() ? 'Preencha apenas se quiser alterar' : 'Mínimo de 6 caracteres'"
-          />
-        </label>
-
-        <div class="drawer__acoes">
-          <button type="button" class="botao botao--secundario" (click)="fecharDrawer()">Cancelar</button>
-          <button type="submit" class="botao botao--primario" [disabled]="salvando()">
-            {{ salvando() ? 'Salvando...' : emEdicao() ? 'Salvar alterações' : 'Cadastrar usuário' }}
-          </button>
-        </div>
-      </form>
-    </aside>
+    <button type="button" class="ui-botao ui-botao--secundario" (click)="fecharDrawer()">Fechar</button>
   </div>
-}
+
+  <form [formGroup]="formulario()" (ngSubmit)="submeterFormulario()">
+    <app-ui-campo rotulo="Nome">
+      <input class="ui-controle" type="text" formControlName="nome" autocomplete="name" />
+    </app-ui-campo>
+
+    <app-ui-campo rotulo="E-mail">
+      <input class="ui-controle" type="email" formControlName="email" autocomplete="email" />
+    </app-ui-campo>
+
+    <app-ui-campo rotulo="Cargo">
+      <select class="ui-controle" formControlName="cargo" aria-label="Selecione o cargo do usuário">
+        @for (cargo of cargosDisponiveis(); track cargo) {
+          <option [value]="cargo">{{ cargo }}</option>
+        }
+      </select>
+    </app-ui-campo>
+
+    <label class="campo-checkbox">
+      <input type="checkbox" formControlName="ativo" />
+      <span>Usuário ativo</span>
+    </label>
+
+    <app-ui-campo [rotulo]="emEdicao() ? 'Nova senha' : 'Senha inicial'">
+      <input
+        class="ui-controle"
+        type="password"
+        formControlName="password"
+        [attr.autocomplete]="emEdicao() ? 'new-password' : 'new-password'"
+        [placeholder]="emEdicao() ? 'Preencha apenas se quiser alterar' : 'Mínimo de 6 caracteres'"
+      />
+    </app-ui-campo>
+
+    <div class="drawer__acoes">
+      <button type="button" class="ui-botao ui-botao--secundario" (click)="fecharDrawer()">Cancelar</button>
+      <button type="submit" class="ui-botao ui-botao--primario" [disabled]="salvando()">
+        {{ salvando() ? 'Salvando...' : emEdicao() ? 'Salvar alterações' : 'Cadastrar usuário' }}
+      </button>
+    </div>
+  </form>
+</app-ui-drawer>

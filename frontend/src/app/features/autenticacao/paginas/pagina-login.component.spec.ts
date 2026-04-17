@@ -89,8 +89,26 @@ describe('PaginaLoginComponent', () => {
     fixture.nativeElement.querySelector('form').dispatchEvent(new Event('submit'));
     fixture.detectChanges();
 
-    const erro = fixture.nativeElement.querySelector('.erro');
+    const erro = fixture.nativeElement.querySelector('app-ui-alerta');
 
     expect(erro?.textContent).toContain('Credenciais inválidas.');
+  });
+
+  it('renderiza atributos de acessibilidade e autocomplete no formulário', () => {
+    fixture.detectChanges();
+
+    const formulario = fixture.nativeElement.querySelector('form') as HTMLFormElement;
+    const email = fixture.nativeElement.querySelector(
+      'input[formControlName="email"]'
+    ) as HTMLInputElement;
+    const senha = fixture.nativeElement.querySelector(
+      'input[formControlName="password"]'
+    ) as HTMLInputElement;
+    const botao = fixture.nativeElement.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+    expect(formulario.getAttribute('aria-label')).toBe('Formulário de autenticação');
+    expect(email.autocomplete).toBe('email');
+    expect(senha.autocomplete).toBe('current-password');
+    expect(botao.getAttribute('aria-busy')).toBe('false');
   });
 });

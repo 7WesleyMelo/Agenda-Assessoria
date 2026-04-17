@@ -1,0 +1,20 @@
+.ui-alerta {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(27, 106, 97, 0.14);
+  border-radius: var(--raio-sm);
+  background: rgba(27, 106, 97, 0.08);
+  color: var(--cor-primaria-escura);
+}
+
+.ui-alerta--erro {
+  border-color: rgba(180, 74, 42, 0.14);
+  background: var(--cor-alerta-fundo);
+  color: var(--cor-alerta);
+}
+
+.ui-alerta--sucesso {
+  border-color: rgba(27, 106, 97, 0.14);
+  background: rgba(27, 106, 97, 0.1);
+  color: var(--cor-primaria);
+}

@@ -9,15 +9,6 @@
   display: grid;
   gap: 0.5rem;
   padding: 1.35rem;
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-lg);
-  background: linear-gradient(180deg, rgba(255, 253, 249, 0.94), rgba(249, 244, 236, 0.78));
-  box-shadow: var(--sombra-card);
-  backdrop-filter: blur(12px);
-  transition:
-    transform var(--transicao-lenta),
-    box-shadow var(--transicao-lenta),
-    border-color var(--transicao-padrao);
 }
 
 .card::before {
@@ -26,11 +17,6 @@
   height: 0.28rem;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--cor-secundaria), rgba(186, 103, 49, 0.16));
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 30px 70px rgba(52, 37, 24, 0.16);
 }
 
 .card p {

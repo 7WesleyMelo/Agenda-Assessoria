@@ -4,12 +4,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { SessaoService } from '../../../core/autenticacao/estado/sessao.service';
+import { UiAlertaComponent } from '../../../shared/ui/alerta/ui-alerta.component';
+import { UiCampoComponent } from '../../../shared/ui/campo/ui-campo.component';
 import { AutenticacaoApiService } from '../servicos/autenticacao-api.service';
 
 @Component({
   selector: 'app-pagina-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, UiCampoComponent, UiAlertaComponent],
   templateUrl: './pagina-login.component.html',
   styleUrl: './pagina-login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

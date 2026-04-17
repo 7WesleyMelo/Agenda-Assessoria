@@ -2,12 +2,3 @@
   display: grid;
   gap: 1.5rem;
 }
-
-.mensagem-erro {
-  margin: 0;
-  padding: 1rem 1.1rem;
-  border: 1px solid rgba(180, 74, 42, 0.14);
-  border-radius: var(--raio-sm);
-  background: var(--cor-alerta-fundo);
-  color: var(--cor-alerta);
-}

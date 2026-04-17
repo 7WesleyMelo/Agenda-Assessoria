@@ -1,5 +1,13 @@
 <div class="menu-usuario">
-  <button type="button" class="menu-usuario__gatilho" (click)="alternarDropdown($event)">
+  <button
+    type="button"
+    class="menu-usuario__gatilho"
+    aria-haspopup="menu"
+    [attr.aria-expanded]="dropdownAberto()"
+    [attr.aria-controls]="menuId"
+    aria-label="Abrir menu do usuário"
+    (click)="alternarDropdown($event)"
+  >
     <div class="menu-usuario__info">
       <strong>{{ usuario()?.cargo }}</strong>
       <span>{{ usuario()?.email }}</span>
@@ -9,7 +17,13 @@
   </button>
 
   @if (dropdownAberto()) {
-    <div class="menu-usuario__dropdown" (click)="$event.stopPropagation()">
+    <div
+      [id]="menuId"
+      class="menu-usuario__dropdown"
+      role="menu"
+      aria-label="Menu do usuário"
+      (click)="$event.stopPropagation()"
+    >
       <div class="menu-usuario__cabecalho">
         <app-avatar-usuario [nome]="usuario()?.nome ?? null" [grande]="true" />
 
@@ -19,7 +33,7 @@
         </div>
       </div>
 
-      <button type="button" class="menu-usuario__acao" (click)="abrirPerfil($event)">Perfil</button>
+      <button type="button" class="menu-usuario__acao" role="menuitem" (click)="abrirPerfil($event)">Perfil</button>
       <button type="button" class="menu-usuario__acao menu-usuario__acao--sair" (click)="solicitarSaida()">
         Sair
       </button>

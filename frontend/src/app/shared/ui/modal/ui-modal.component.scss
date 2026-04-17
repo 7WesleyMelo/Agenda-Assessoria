@@ -1,0 +1,33 @@
+.ui-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(18, 39, 52, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+}
+
+.ui-modal {
+  width: min(30rem, 100%);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  background: linear-gradient(180deg, rgba(255, 253, 249, 0.95), rgba(249, 244, 236, 0.82));
+  box-shadow: var(--sombra-card);
+  backdrop-filter: blur(12px);
+  transition:
+    transform var(--transicao-lenta),
+    box-shadow var(--transicao-lenta),
+    border-color var(--transicao-padrao);
+}
+
+.ui-modal:hover {
+  box-shadow: 0 30px 70px rgba(52, 37, 24, 0.16);
+}
+
+@media (max-width: 760px) {
+  .ui-modal {
+    width: 100%;
+  }
+}

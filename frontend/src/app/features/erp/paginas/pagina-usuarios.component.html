@@ -1,6 +1,6 @@
 <section class="usuarios">
   @if (mensagemErro()) {
-    <p class="mensagem-erro">{{ mensagemErro() }}</p>
+    <app-ui-alerta variante="erro">{{ mensagemErro() }}</app-ui-alerta>
   }
 
   <app-cabecalho-usuarios

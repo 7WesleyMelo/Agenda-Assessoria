@@ -127,6 +127,8 @@
 }
 
 form {
+  display: grid;
+  gap: 1.3rem;
   width: min(100%, 23rem);
 }
 
@@ -138,67 +140,6 @@ header h2 {
 header p {
   margin: 0.7rem 0 0;
   color: var(--cor-texto-suave);
-}
-
-.campo {
-  display: grid;
-  gap: 0.55rem;
-  margin-top: 1.3rem;
-}
-
-.campo span {
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.campo input {
-  min-height: 3.45rem;
-  padding: 0 1rem;
-  border: 1px solid rgba(94, 74, 56, 0.14);
-  border-radius: var(--raio-md);
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--cor-texto);
-}
-
-.campo input:hover {
-  border-color: rgba(94, 74, 56, 0.22);
-}
-
-.campo input:focus {
-  border-color: rgba(27, 106, 97, 0.26);
-}
-
-.erro {
-  margin: 1rem 0 0;
-  padding: 0.95rem 1rem;
-  border-radius: var(--raio-sm);
-  background: var(--cor-alerta-fundo);
-  color: var(--cor-alerta);
-  font-weight: 700;
-}
-
-button {
-  width: 100%;
-  min-height: 3.45rem;
-  margin-top: 1.5rem;
-  border: 0;
-  border-radius: var(--raio-md);
-  background: linear-gradient(135deg, var(--cor-secundaria), #d18445);
-  color: #fff;
-  font-weight: 800;
-  box-shadow: 0 18px 34px rgba(186, 103, 49, 0.22);
-  cursor: pointer;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 22px 38px rgba(186, 103, 49, 0.26);
-}
-
-button:disabled {
-  opacity: 0.72;
-  cursor: wait;
-  transform: none;
 }
 
 @media (max-width: 960px) {

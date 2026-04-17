@@ -1,0 +1,14 @@
+@if (aberto()) {
+  <div class="ui-drawer-backdrop" (click)="solicitarFechamento()">
+    <aside
+      class="ui-drawer"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="ariaLabel()"
+      tabindex="-1"
+      (click)="$event.stopPropagation()"
+    >
+      <ng-content />
+    </aside>
+  </div>
+}

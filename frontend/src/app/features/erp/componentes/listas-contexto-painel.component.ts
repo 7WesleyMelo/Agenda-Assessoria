@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { PainelInicial } from '../../../core/modelos/painel-inicial.model';
+import { UiCardComponent } from '../../../shared/ui/card/ui-card.component';
 
 @Component({
   selector: 'app-listas-contexto-painel',
   standalone: true,
+  imports: [UiCardComponent],
   templateUrl: './listas-contexto-painel.component.html',
   styleUrl: './listas-contexto-painel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
