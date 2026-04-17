@@ -116,11 +116,37 @@ describe('PaginaUsuariosComponent', () => {
 
     const modal = fixture.nativeElement.querySelector('.ui-modal') as HTMLElement;
 
-    expect(usuariosFacade.excluir).toHaveBeenCalledWith(1);
+    expect(usuariosFacade.excluir).toHaveBeenCalledWith(1, jasmine.any(Function));
     expect(modal).not.toBeNull();
     expect(modal.getAttribute('role')).toBe('dialog');
     expect(modal.getAttribute('aria-label')).toBe('Confirmação de exclusão de usuário');
     expect(modal.textContent).toContain('Não é permitido excluir o usuário autenticado.');
+  });
+
+  it('fecha o modal quando a exclusão é concluída com sucesso', () => {
+    usuariosFacade.excluir.and.callFake((_usuarioId: number, onSuccess?: () => void) => {
+      onSuccess?.();
+    });
+
+    const botoesExcluir = Array.from(
+      fixture.nativeElement.querySelectorAll('.ui-botao--texto-alerta')
+    ) as HTMLButtonElement[];
+
+    botoesExcluir[1].click();
+    fixture.detectChanges();
+
+    const botoesModal = Array.from(
+      fixture.nativeElement.querySelectorAll('.modal .ui-botao')
+    ) as HTMLButtonElement[];
+    const botaoConfirmar = botoesModal.find((botao: HTMLButtonElement) =>
+      botao.textContent?.includes('Confirmar exclusão')
+    ) as HTMLButtonElement;
+
+    botaoConfirmar.click();
+    fixture.detectChanges();
+
+    expect(usuariosFacade.excluir).toHaveBeenCalled();
+    expect(fixture.nativeElement.querySelector('.ui-modal')).toBeNull();
   });
 
   it('exibe estado vazio quando não existem usuários para listar', async () => {

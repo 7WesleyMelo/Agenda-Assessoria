@@ -141,7 +141,9 @@ export class PaginaUsuariosComponent implements OnInit {
       return;
     }
 
-    this.usuariosFacade.excluir(usuario.id);
+    this.usuariosFacade.excluir(usuario.id, () => {
+      this.cancelarExclusao();
+    });
   }
 
   protected cancelarExclusao(): void {

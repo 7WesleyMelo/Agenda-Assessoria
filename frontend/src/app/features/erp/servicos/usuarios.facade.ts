@@ -75,7 +75,7 @@ export class UsuariosFacade {
     });
   }
 
-  excluir(usuarioId: number): void {
+  excluir(usuarioId: number, onSuccess?: () => void): void {
     this.excluindoState.set(true);
     this.mensagemErroExclusaoState.set(null);
 
@@ -83,6 +83,7 @@ export class UsuariosFacade {
       next: () => {
         this.excluindoState.set(false);
         this.mensagemErroExclusaoState.set(null);
+        onSuccess?.();
         this.carregar();
       },
       error: (erro: HttpErrorResponse) => {
