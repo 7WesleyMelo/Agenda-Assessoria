@@ -110,6 +110,8 @@ docker compose exec web npm run build
 - [backend/README.md](backend/README.md)
 - [frontend/README.md](frontend/README.md)
 - [docs/arquitetura.md](docs/arquitetura.md)
+- [docs/infraestrutura-local.md](docs/infraestrutura-local.md)
+- [docs/pipeline-e-validacao.md](docs/pipeline-e-validacao.md)
 - [docs/contrato-da-api.md](docs/contrato-da-api.md)
 - [docs/guia-de-avaliacao.md](docs/guia-de-avaliacao.md)
 - [docs/modelo-de-dominio.md](docs/modelo-de-dominio.md)
