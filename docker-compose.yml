@@ -14,6 +14,7 @@ services:
     environment:
       APP_AMBIENTE: "${APP_AMBIENTE:-local}"
       APP_DEBUG: "${APP_DEBUG:-true}"
+      AUTO_SEED: "${AUTO_SEED:-true}"
       TZ: "${TZ:-America/Cuiaba}"
       COMPOSER_CACHE_DIR: /tmp/composer-cache
       DB_CONNECTION: pgsql
@@ -26,11 +27,11 @@ services:
       db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "php -v || exit 1"]
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/api/v1/saude >/dev/null || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 10s
+      start_period: 30s
     networks:
       - agenda
 
@@ -54,13 +55,13 @@ services:
       NPM_CONFIG_CACHE: /root/.npm
     depends_on:
       api:
-        condition: service_started
+        condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "node --version || exit 1"]
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:4200 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 10s
+      start_period: 40s
     networks:
       - agenda
 
