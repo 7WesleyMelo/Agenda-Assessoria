@@ -15,10 +15,18 @@ Este guia concentra o caminho mais curto para executar o projeto e validar os fl
 2. Execute:
 
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 
 3. Aguarde a subida dos serviços `db`, `api` e `web`.
+
+## Observação sobre os arquivos `.env`
+
+Para avaliar o projeto:
+
+- é necessário criar manualmente apenas o `.env` da raiz
+- o arquivo `backend/.env` é gerado automaticamente na primeira subida do container da API, se ainda não existir
+
 4. Aguarde a preparação automática do backend, que executa:
 
 ```bash

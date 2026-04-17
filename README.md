@@ -53,13 +53,25 @@ docker compose up --build -d
 
 5. Aguarde a preparação automática do backend.
 
+## Sobre os arquivos `.env`
+
+O projeto usa dois contextos de configuração:
+
+- `.env` na raiz do repositório: usado pelo `docker compose`
+- `backend/.env`: usado pela aplicação Laravel
+
+Para a execução local do teste:
+
+- você precisa criar manualmente apenas o `.env` da raiz, a partir de `.env.example`
+- o arquivo `backend/.env` é gerado automaticamente na primeira subida do container da API, a partir de `backend/.env.example`, caso não exista
+
 Na subida do container da API, o projeto executa automaticamente:
 
 - `composer install`, quando necessário
 - `php artisan migrate --force`
 - `php artisan db:seed --class=UsuarioAdministradorSeeder --force`
 
-6. Acesse:
+## Endereços
 
 - Frontend: `http://127.0.0.1:4200`
 - API: `http://127.0.0.1:8000/api/v1`

@@ -74,10 +74,21 @@ Com Docker Compose em execução:
 Para subir o ambiente completo:
 
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 
-Na inicialização do container `api`, o backend executa automaticamente:
+## Sobre o arquivo `backend/.env`
+
+O backend usa seu próprio arquivo de ambiente, separado do `.env` da raiz.
+
+Regra atual do projeto:
+
+- o `.env` da raiz é usado pelo `docker compose`
+- o `backend/.env` é usado pela aplicação Laravel
+
+Na inicialização do container `api`, o arquivo `backend/.env` é gerado automaticamente a partir de `backend/.env.example`, caso ainda não exista.
+
+Na sequência, o backend executa automaticamente:
 
 ```bash
 php artisan migrate --force
