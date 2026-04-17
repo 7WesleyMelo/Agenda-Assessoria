@@ -12,17 +12,19 @@ class HealthCheckController extends Controller
     public function __invoke(): JsonResponse
     {
         $banco = 'ok';
+        $status = 'ok';
 
         try {
             DB::connection()->getPdo();
         } catch (Throwable) {
             $banco = 'falha';
+            $status = 'degradado';
         }
 
         $statusHttp = $banco === 'ok' ? 200 : 503;
 
         return response()->json([
-            'status' => 'ok',
+            'status' => $status,
             'servico' => 'agenda-assessoria-api',
             'versao' => 'v1',
             'ambiente' => config('app.env'),
