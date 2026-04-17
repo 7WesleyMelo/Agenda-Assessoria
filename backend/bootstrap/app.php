@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AdicionaRequestId;
 use App\Http\Middleware\AutenticaComJwt;
+use App\Http\Middleware\GaranteCargoUsuario;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'jwt.auth' => AutenticaComJwt::class,
+            'cargo' => GaranteCargoUsuario::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -14,7 +14,10 @@ Route::prefix('v1')->group(function (): void {
     Route::middleware('jwt.auth')->group(function (): void {
         Route::get('/auth/perfil', PerfilController::class);
         Route::get('/erp/painel-inicial', PainelInicialController::class);
-        Route::apiResource('usuarios', UsuarioController::class)
-            ->only(['index', 'store', 'update', 'destroy']);
+
+        Route::middleware('cargo:Administrador')->group(function (): void {
+            Route::apiResource('usuarios', UsuarioController::class)
+                ->only(['index', 'store', 'update', 'destroy']);
+        });
     });
 });

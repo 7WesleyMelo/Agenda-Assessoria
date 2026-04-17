@@ -13,7 +13,7 @@ class UsuarioControllerTest extends TestCase
 
     public function test_lista_usuarios(): void
     {
-        [$usuarioAutenticado, $token] = $this->autenticarComoAdministrador();
+        [, $token] = $this->autenticarComoAdministrador();
 
         User::factory()->count(2)->create();
 
@@ -107,6 +107,29 @@ class UsuarioControllerTest extends TestCase
         $response
             ->assertUnprocessable()
             ->assertJsonValidationErrors(['usuario']);
+    }
+
+    public function test_bloqueia_crud_de_usuarios_para_cargo_sem_permissao(): void
+    {
+        $usuario = User::factory()->create([
+            'cargo' => 'Operador',
+            'ativo' => true,
+        ]);
+
+        $token = app(JwtService::class)->gerarToken($usuario);
+
+        $response = $this->withHeader('Authorization', 'Bearer '.$token['token'])
+            ->getJson('/api/v1/usuarios');
+
+        $response
+            ->assertForbidden()
+            ->assertJson([
+                'message' => 'Você não tem permissão para executar esta ação.',
+            ])
+            ->assertJsonStructure([
+                'message',
+                'request_id',
+            ]);
     }
 
     /**
