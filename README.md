@@ -48,7 +48,7 @@ docs/
 4. Suba os serviços com:
 
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 
 5. Aguarde a preparação automática do backend.
