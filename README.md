@@ -2,15 +2,20 @@
 
 Teste técnico estruturado como monorepo, com API RESTful em Laravel, frontend em Angular, PostgreSQL e execução local por Docker Compose.
 
-## Escopo atual
+## Visão geral
 
-O projeto já entrega o primeiro fluxo funcional ponta a ponta do ERP:
+O projeto entrega um fluxo funcional ponta a ponta de um ERP, com foco em organização arquitetural, qualidade técnica e experiência de avaliação.
 
-- login com JWT
+Escopo implementado:
+
+- autenticação com JWT
 - carregamento do painel inicial autenticado
-- shell principal com menu lateral
-- gestão de usuários com listagem, cadastro, edição e exclusão
+- shell principal do ERP com menu lateral
+- gestão de usuários com listagem, busca, paginação, cadastro, edição e exclusão
 - bloqueio da exclusão do próprio usuário autenticado
+- autorização por cargo para acesso ao módulo de usuários
+- padronização de erros com `request_id`
+- testes automatizados no backend e no frontend
 
 ## Stack
 
@@ -30,34 +35,73 @@ docs/
 
 ## Padrão de idioma
 
-- Toda a documentação do projeto deve permanecer em pt-BR.
-- Textos visíveis ao avaliador devem priorizar pt-BR.
-- Mensagens de commit devem usar descrição em pt-BR.
+- Toda a documentação do projeto permanece em pt-BR.
+- Textos visíveis ao avaliador priorizam pt-BR.
+- Mensagens de commit seguem descrição em pt-BR.
 - Termos técnicos consolidados podem permanecer no idioma padrão da ferramenta.
 
 ## Como executar
 
-1. Copie `.env.example` para `.env` na raiz do projeto, caso ainda não exista.
-2. Suba os serviços com `docker compose up --build`.
-3. Acesse o frontend em `http://127.0.0.1:4200`.
-4. A API ficará disponível em `http://127.0.0.1:8001/api/v1`.
+1. Garanta que Docker Desktop esteja em execução.
+2. Confirme que as portas `4200`, `5432` e `8000` estejam livres no host.
+3. Copie `.env.example` para `.env` na raiz do projeto, caso ainda não exista.
+4. Suba os serviços com:
 
-Credencial inicial semeada no backend:
+```bash
+docker compose up --build
+```
 
-- e-mail: `admin@agendaassessoria.com.br`
-- senha: `123456`
+5. Acesse:
 
-## Qualidade e validação
+- Frontend: `http://127.0.0.1:4200`
+- API: `http://127.0.0.1:8000/api/v1`
+- Health check: `http://127.0.0.1:8000/api/v1/saude`
 
-- Backend: `composer lint`, `composer test`
-- Frontend: `npm run lint`, `npm run test:ci`, `npm run build`
-- Pipeline inicial: GitHub Actions em `.github/workflows/validacao.yml`
+## Credencial inicial
+
+- E-mail: `admin@agendaassessoria.com.br`
+- Senha: `123456`
+
+## Serviços do Docker
+
+O `docker-compose.yml` sobe três serviços principais:
+
+- `db`: banco PostgreSQL
+- `api`: aplicação Laravel
+- `web`: aplicação Angular
+
+## Comandos de validação
+
+### Backend
+
+```bash
+docker compose exec api composer lint
+docker compose exec api composer test
+```
+
+### Frontend
+
+```bash
+docker compose exec web npm run lint
+docker compose exec web npm run test:ci
+docker compose exec web npm run build
+```
+
+## Pontos de atenção para avaliação
+
+- O módulo de usuários exige autenticação e permissão de cargo `Administrador`.
+- As respostas de erro da API retornam `request_id` para rastreabilidade.
+- O header `X-Request-Id` é incluído nas respostas da API.
+- O endpoint de login possui rate limit.
+- O endpoint de saúde valida a conectividade real com o banco.
 
 ## Documentação relacionada
 
-- `docs/arquitetura.md`
-- `docs/contrato-da-api.md`
-- `docs/guia-de-avaliacao.md`
-- `docs/modelo-de-dominio.md`
-- `docs/plano-de-entrega.md`
-- `docs/estrategia-de-commits.md`
+- [backend/README.md](backend/README.md)
+- [frontend/README.md](frontend/README.md)
+- [docs/arquitetura.md](docs/arquitetura.md)
+- [docs/contrato-da-api.md](docs/contrato-da-api.md)
+- [docs/guia-de-avaliacao.md](docs/guia-de-avaliacao.md)
+- [docs/modelo-de-dominio.md](docs/modelo-de-dominio.md)
+- [docs/plano-de-entrega.md](docs/plano-de-entrega.md)
+- [docs/estrategia-de-commits.md](docs/estrategia-de-commits.md)

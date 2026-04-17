@@ -2,6 +2,10 @@
 
 API RESTful do projeto Agenda Assessoria, construída com Laravel 12 e organizada por contexto funcional.
 
+## Objetivo
+
+Disponibilizar a camada de autenticação, dados e regras de negócio do fluxo inicial do ERP, com foco em previsibilidade de contrato, segurança básica e testabilidade.
+
 ## Fluxos implementados
 
 - autenticação por JWT
@@ -9,16 +13,23 @@ API RESTful do projeto Agenda Assessoria, construída com Laravel 12 e organizad
 - carregamento do painel inicial do ERP
 - CRUD de usuários
 - proteção para impedir exclusão do usuário autenticado
+- autorização por cargo no módulo de usuários
+- health check com verificação real do banco
 
 ## Estrutura principal
 
 ```text
 app/
   Http/
+    Controllers/
+    Middleware/
+    Requests/
+    Resources/
   Models/
   Services/
   Support/
 database/
+  factories/
   migrations/
   seeders/
 routes/
@@ -27,28 +38,78 @@ tests/
 
 ## Endpoints atuais
 
+### Públicos
+
+- `GET /api/v1/saude`
 - `POST /api/v1/auth/login`
+
+### Autenticados
+
 - `GET /api/v1/auth/perfil`
 - `GET /api/v1/erp/painel-inicial`
+
+### Autenticados e restritos a Administrador
+
 - `GET /api/v1/usuarios`
 - `POST /api/v1/usuarios`
 - `PUT /api/v1/usuarios/{id}`
 - `DELETE /api/v1/usuarios/{id}`
 
+## Padrões técnicos adotados
+
+- validação de entrada com `FormRequest`
+- serialização de saída com `JsonResource`
+- serviços dedicados para autenticação, painel inicial e usuários
+- middleware próprio para autenticação JWT
+- middleware de autorização por cargo para o módulo administrativo
+- respostas de erro padronizadas com `request_id`
+
+## Execução local
+
+Com Docker Compose em execução:
+
+- API: `http://127.0.0.1:8000/api/v1`
+- Health check: `http://127.0.0.1:8000/api/v1/saude`
+
+Para subir o ambiente completo:
+
+```bash
+docker compose up --build
+```
+
 ## Comandos úteis
 
 ```bash
-composer lint
-composer format
-composer test
-php artisan db:seed
+docker compose exec api composer lint
+docker compose exec api composer format
+docker compose exec api composer test
+docker compose exec api php artisan migrate
+docker compose exec api php artisan db:seed
 ```
 
-## Banco e Docker
+## Banco e variáveis de ambiente
 
-Quando a API roda dentro do Docker, a conexão PostgreSQL usa o serviço `db` automaticamente. Fora do container, a aplicação continua respeitando `DB_HOST` definido no `.env`.
+Quando a API roda dentro do Docker, a conexão PostgreSQL usa o host `db`. Fora do container, a aplicação respeita `DB_HOST` definido no `.env`.
+
+Variáveis mais relevantes:
+
+- `DB_CONNECTION`
+- `DB_HOST`
+- `DB_PORT`
+- `DB_DATABASE`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+- `JWT_SECRET`
 
 ## Credencial inicial
 
-- e-mail: `admin@agendaassessoria.com.br`
-- senha: `123456`
+- E-mail: `admin@agendaassessoria.com.br`
+- Senha: `123456`
+
+## Qualidade
+
+Estado atual de validação:
+
+- lint do backend passando
+- testes automatizados do backend passando
+- cobertura dos principais fluxos de login, painel inicial, saúde e usuários

@@ -57,3 +57,5 @@ Entregas consolidadas nesta fase:
 - health check com validação real da dependência de banco
 - bloqueio de acesso com token de usuário inativo
 - guia de avaliação para execução e validação dos fluxos principais
+- autorização por cargo no módulo de usuários
+- revisão final da documentação de entrega

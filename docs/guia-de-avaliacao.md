@@ -2,51 +2,60 @@
 
 ## Objetivo
 
-Este guia concentra o caminho mais curto para um avaliador executar o projeto e validar os fluxos entregues.
+Este guia concentra o caminho mais curto para executar o projeto e validar os fluxos entregues sem atrito.
 
 ## Pré-requisitos
 
 - Docker Desktop em execução
-- Portas `4200`, `5432` e `8001` livres no host
+- portas `4200`, `5432` e `8000` livres no host
 
 ## Subida rápida
 
-1. Copiar `.env.example` para `.env` na raiz do projeto.
-2. Executar `docker compose up --build`.
-3. Aguardar a conclusão da subida dos serviços `db`, `api` e `web`.
+1. Copie `.env.example` para `.env` na raiz do projeto, se necessário.
+2. Execute:
+
+```bash
+docker compose up --build
+```
+
+3. Aguarde a subida dos serviços `db`, `api` e `web`.
 
 ## Endereços
 
 - Frontend: `http://127.0.0.1:4200`
-- API: `http://127.0.0.1:8001/api/v1`
-- Health check: `http://127.0.0.1:8001/api/v1/saude`
+- API: `http://127.0.0.1:8000/api/v1`
+- Health check: `http://127.0.0.1:8000/api/v1/saude`
 
 ## Credencial inicial
 
 - E-mail: `admin@agendaassessoria.com.br`
 - Senha: `123456`
 
-## Fluxos para validação
+## Fluxos sugeridos para validação
 
 ### 1. Login
 
-- Acessar a tela inicial do frontend
-- Entrar com a credencial inicial
-- Confirmar redirecionamento para o painel principal do ERP
+- Acesse a tela inicial do frontend.
+- Entre com a credencial inicial.
+- Confirme o redirecionamento para o painel principal do ERP.
 
 ### 2. Painel inicial
 
-- Verificar carregamento do dashboard autenticado
-- Confirmar exibição de atalhos e menu lateral principal
+- Verifique o carregamento do dashboard autenticado.
+- Confirme a exibição de indicadores, atalhos e menu lateral principal.
 
 ### 3. Gestão de usuários
 
-- Abrir o menu de cadastros
-- Acessar a tela de usuários
-- Criar um novo usuário
-- Editar o usuário criado
-- Excluir o usuário criado
-- Tentar excluir o próprio usuário autenticado para validar a regra de proteção
+- Acesse a área de usuários pelo menu lateral.
+- Cadastre um novo usuário.
+- Edite o usuário criado.
+- Exclua o usuário criado.
+- Tente excluir o próprio usuário autenticado para validar a regra de proteção.
+
+### 4. Regra de autorização
+
+- O módulo de usuários é restrito a perfis com cargo `Administrador`.
+- Essa proteção foi implementada no backend e validada por teste automatizado.
 
 ## Comandos de qualidade
 
@@ -65,9 +74,12 @@ docker compose exec web npm run test:ci
 docker compose exec web npm run build
 ```
 
-## Itens de acabamento técnico
+## Itens técnicos entregues
 
-- Login com rate limit para reduzir brute force
-- Respostas da API com `request_id` para rastreabilidade
-- Health check com verificação real do banco
-- Pipeline inicial de validação em GitHub Actions
+- autenticação JWT
+- rate limit no endpoint de login
+- respostas da API com `request_id`
+- header `X-Request-Id` para rastreabilidade
+- health check com verificação real do banco
+- autorização por cargo no módulo de usuários
+- testes automatizados no backend e no frontend
