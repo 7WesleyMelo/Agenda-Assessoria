@@ -19,6 +19,14 @@ docker compose up --build
 ```
 
 3. Aguarde a subida dos serviços `db`, `api` e `web`.
+4. Aguarde a preparação automática do backend, que executa:
+
+```bash
+php artisan migrate --force
+php artisan db:seed --class=UsuarioAdministradorSeeder --force
+```
+
+Não é necessário rodar seed manualmente para usar a credencial inicial.
 
 ## Endereços
 

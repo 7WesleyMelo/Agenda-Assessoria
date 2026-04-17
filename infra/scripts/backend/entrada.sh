@@ -38,7 +38,12 @@ if php artisan --version >/dev/null 2>&1; then
     printf '\nJWT_SECRET=%s\n' "$(php -r "echo bin2hex(random_bytes(32));")" >> .env
   fi
 
-  php artisan migrate --force || true
+  echo "Executando migracoes do banco..."
+  php artisan migrate --force
+
+  echo "Semeando usuario administrador padrao..."
+  php artisan db:seed --class=UsuarioAdministradorSeeder --force
+
   php artisan serve --host=0.0.0.0 --port=8000
 fi
 

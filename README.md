@@ -51,13 +51,23 @@ docs/
 docker compose up --build
 ```
 
-5. Acesse:
+5. Aguarde a preparação automática do backend.
+
+Na subida do container da API, o projeto executa automaticamente:
+
+- `composer install`, quando necessário
+- `php artisan migrate --force`
+- `php artisan db:seed --class=UsuarioAdministradorSeeder --force`
+
+6. Acesse:
 
 - Frontend: `http://127.0.0.1:4200`
 - API: `http://127.0.0.1:8000/api/v1`
 - Health check: `http://127.0.0.1:8000/api/v1/saude`
 
 ## Credencial inicial
+
+Após a subida do ambiente, a credencial abaixo já estará disponível sem necessidade de seed manual:
 
 - E-mail: `admin@agendaassessoria.com.br`
 - Senha: `123456`

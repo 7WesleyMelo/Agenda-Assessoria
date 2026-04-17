@@ -77,6 +77,15 @@ Para subir o ambiente completo:
 docker compose up --build
 ```
 
+Na inicialização do container `api`, o backend executa automaticamente:
+
+```bash
+php artisan migrate --force
+php artisan db:seed --class=UsuarioAdministradorSeeder --force
+```
+
+Isso garante que o usuário administrador esteja disponível sem ação manual do avaliador.
+
 ## Comandos úteis
 
 ```bash
@@ -84,7 +93,7 @@ docker compose exec api composer lint
 docker compose exec api composer format
 docker compose exec api composer test
 docker compose exec api php artisan migrate
-docker compose exec api php artisan db:seed
+docker compose exec api php artisan db:seed --class=UsuarioAdministradorSeeder
 ```
 
 ## Banco e variáveis de ambiente
