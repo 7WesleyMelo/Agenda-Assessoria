@@ -10,10 +10,18 @@
   <form [formGroup]="formulario()" (ngSubmit)="submeterFormulario()">
     <app-ui-campo rotulo="Nome">
       <input class="ui-controle" type="text" formControlName="nome" autocomplete="name" />
+
+      @if (mensagemErro('nome'); as erro) {
+        <p class="campo-erro">{{ erro }}</p>
+      }
     </app-ui-campo>
 
     <app-ui-campo rotulo="E-mail">
       <input class="ui-controle" type="email" formControlName="email" autocomplete="email" />
+
+      @if (mensagemErro('email'); as erro) {
+        <p class="campo-erro">{{ erro }}</p>
+      }
     </app-ui-campo>
 
     <app-ui-campo rotulo="Cargo">
@@ -22,6 +30,10 @@
           <option [value]="cargo">{{ cargo }}</option>
         }
       </select>
+
+      @if (mensagemErro('cargo'); as erro) {
+        <p class="campo-erro">{{ erro }}</p>
+      }
     </app-ui-campo>
 
     <label class="campo-checkbox">
@@ -34,9 +46,13 @@
         class="ui-controle"
         type="password"
         formControlName="password"
-        [attr.autocomplete]="emEdicao() ? 'new-password' : 'new-password'"
+        autocomplete="new-password"
         [placeholder]="emEdicao() ? 'Preencha apenas se quiser alterar' : 'Mínimo de 6 caracteres'"
       />
+
+      @if (mensagemErro('password'); as erro) {
+        <p class="campo-erro">{{ erro }}</p>
+      }
     </app-ui-campo>
 
     <div class="drawer__acoes">
